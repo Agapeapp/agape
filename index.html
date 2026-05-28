@@ -1624,4 +1624,35 @@ var dateStr = DS[now.getDay()]+', '+now.getDate()+' de '+MS[now.getMonth()]+' de
 
 </script>
 </body>
-</html>
+</htmlasync function obResp(){
+  var step=obH.filter(function(m){return m.role==='user';}).length;
+  var obpel=document.getElementById('obp');if(obpel)obpel.style.width=Math.round((step/5)*100)+'%';
+  if(step===1){
+    var name=obH[obH.length-1].content;
+    uname=name;uinit=name.slice(0,2).toUpperCase();sv('name',uname);sv('init',uinit);
+    addObMsg('¡Qué bonito nombre, '+name+'! ¿Cómo te sientes espiritualmente ahora mismo? OPCIONES: Con paz | Un poco perdido | Buscando más | En un momento difícil',false);
+  }else if(step===2){
+    addObMsg('¿Qué es lo que más necesitas en este momento? OPCIONES: Paz interior | Fortalecer mi fe | Entender la Biblia | Apoyo en algo difícil',false);
+  }else if(step===3){
+    addObMsg('¿Con qué tradición cristiana te identificas? OPCIONES: Católico | Evangélico | No denominacional | Prefiero no decir',false);
+  }else if(step===4){
+    addObMsg('¿Con qué frecuencia te gustaría usar Ágape? OPCIONES: Cada día | Varios días a la semana | Cuando lo necesite',false);
+  }else{
+    var ms=document.getElementById('obms');
+    var ty=document.createElement('div');ty.className='oty';ty.innerHTML='<span></span><span></span><span></span>';
+    if(ms){ms.appendChild(ty);ms.scrollTop=ms.scrollHeight;}
+    var estado=obH[1]?obH[1].content:'';
+    var necesidad=obH[2]?obH[2].content:'';
+    var prompt='Da un mensaje de bienvenida calido y esperanzador de exactamente 2 lineas para una persona llamada '+uname+' que se siente "'+estado+'" y necesita "'+necesidad+'". Solo el mensaje final, en espanol, sin introduccion.';
+    try{
+      var reply=await ai([{role:'user',content:prompt}],null,150);
+      if(ty.parentNode)ty.remove();
+      addObMsg(reply,false);
+    }catch(e){
+      if(ty.parentNode)ty.remove();
+      addObMsg('Agape esta aqui para acompanarte en cada paso de tu camino de fe. Bienvenido, '+uname+'.',false);
+    }
+    setTimeout(finOb,2500);
+  }
+}
+>
