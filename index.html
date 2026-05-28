@@ -875,19 +875,13 @@ function switchMV(id,btn){
 // 7. XP / STREAK / BARS
 // =============================================
 function updXP(){
-  document.getElementById('xpd').textContent=xp+' XP';
-  document.getElementById('lxpt').textContent=xp+' XP';
-  document.getElementById('lxpb').style.width=Math.min(100,xp/5)+'%';
-  var nv=xp<50?'Nivel 1 - Semilla':xp<150?'Nivel 2 - Peregrino':xp<300?'Nivel 3 - Discipulo':xp<500?'Nivel 4 - Fiel':'Nivel 5 - Santo';
-  document.getElementById('lniv').textContent=nv;
-  document.getElementById('plv').textContent=nv;
-  document.getElementById('pxf').style.width=Math.min(100,xp/5)+'%';
-  document.getElementById('psxp').textContent=xp;
-  document.getElementById('psst').textContent=streak;
-  document.getElementById('psrt').textContent=totrt;
-  var stxtel=document.getElementById('stxt');if(stxtel)stxtel.textContent=streak+' '+(streak===1?'dia':'días');
-  document.getElementById('pav').textContent=uinit;
-  document.getElementById('pnm').textContent=uname||'Bienvenido';
+  function se(id,val,prop){var el=document.getElementById(id);if(el){if(prop==='width')el.style.width=val;else el.textContent=val;}}
+  var nv=xp<50?'Nivel 1 · Semilla':xp<150?'Nivel 2 · Peregrino':xp<300?'Nivel 3 · Discipulo':xp<500?'Nivel 4 · Fiel':'Nivel 5 · Santo';
+  se('xpd',xp+' XP');se('lxpt',xp+' XP');se('lxpb',Math.min(100,xp/5)+'%','width');
+  se('lniv',nv);se('plv',nv);se('pxf',Math.min(100,xp/5)+'%','width');
+  se('psxp',xp);se('psst',streak);se('psrt',totrt);
+  se('stxt',streak+' '+(streak===1?'dia':'dias'));
+  se('pav',uinit);se('pnm',uname||'Bienvenido');
 }
 function updBars(){
   var p=rcount/5*100;
