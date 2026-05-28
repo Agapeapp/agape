@@ -1655,4 +1655,35 @@ var dateStr = DS[now.getDay()]+', '+now.getDate()+' de '+MS[now.getMonth()]+' de
     setTimeout(finOb,2500);
   }
 }
+async function obNext(){
+  addObMsg('Hola. Bienvenido a Ágape, tu espacio de crecimiento espiritual.\n\n¿Cómo te llamas?', false);
+}
+async function obResp(){
+  var step=obH.filter(function(m){return m.role==='user';}).length;
+  var obpel=document.getElementById('obp');if(obpel)obpel.style.width=Math.round((step/5)*100)+'%';
+  
+  if(step===1){
+    var name=obH[obH.length-1].content;
+    uname=name;uinit=name.slice(0,2).toUpperCase();sv('name',uname);sv('init',uinit);
+    addObMsg('¡Qué bonito nombre, '+name+'!\n\n¿Cómo te sientes espiritualmente en este momento? OPCIONES: Con paz | Un poco perdido | Buscando más | En un momento difícil', false);
+  } else if(step===2){
+    addObMsg('Gracias por compartir eso.\n\n¿Qué es lo que más necesitas ahora mismo? OPCIONES: Paz interior | Fortalecer mi fe | Entender la Biblia | Apoyo en algo difícil', false);
+  } else if(step===3){
+    addObMsg('¿Con qué tradición cristiana te identificas? OPCIONES: Católico | Evangélico | No denominacional | Prefiero no decir', false);
+  } else if(step===4){
+    addObMsg('¿Con qué frecuencia te gustaría usar Ágape? OPCIONES: Cada día | Varios días a la semana | Cuando lo necesite', false);
+  } else {
+    // Final message - fixed but personalized
+    var estado=obH[1]?obH[1].content:'';
+    var msgs = {
+      'Con paz': 'Qué regalo es llegar desde un lugar de paz. Ágape está aquí para ayudarte a seguir creciendo en esa calma.',
+      'Un poco perdido': 'No estás solo en ese caminar. Ágape es el espacio donde puedes encontrar dirección, paso a paso.',
+      'Buscando más': 'Esa búsqueda ya es una oración. Aquí encontrarás herramientas para profundizar cada día.',
+      'En un momento difícil': 'Dios te encuentra exactamente donde estás. Ágape está aquí para acompañarte en este momento.'
+    };
+    var finalMsg = msgs[estado] || 'Cada día es una nueva oportunidad para crecer. Ágape está aquí para acompañarte.';
+    addObMsg('¡Todo listo, '+uname+'! 🌿\n\n'+finalMsg, false);
+    setTimeout(finOb, 2500);
+  }
+}
 >
