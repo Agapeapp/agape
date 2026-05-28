@@ -1509,6 +1509,27 @@ window.switchMV=switchMV;
 // 27. ARRANQUE FINAL
 // =============================================
 if(uname||ld('email',null)){document.getElementById('splash').style.display='none';launch();}
+// VARIABLES GLOBALES - accesibles desde todas las funciones
+var uname = (function(){try{var v=localStorage.getItem('ag_name');return v?JSON.parse(v):'';}catch(e){return '';}})();
+var uinit = (function(){try{var v=localStorage.getItem('ag_init');return v?JSON.parse(v):'Tu';}catch(e){return 'Tu';}})();
+var xp = (function(){try{var v=localStorage.getItem('ag_xp');return v?JSON.parse(v):0;}catch(e){return 0;}})();
+var streak = (function(){try{var v=localStorage.getItem('ag_streak');return v?JSON.parse(v):0;}catch(e){return 0;}})();
+var totrt = (function(){try{var v=localStorage.getItem('ag_totrt');return v?JSON.parse(v):0;}catch(e){return 0;}})();
+var lmode = (function(){try{var v=localStorage.getItem('ag_lmode');return v?JSON.parse(v):false;}catch(e){return false;}})();
+var diary = (function(){try{var v=localStorage.getItem('ag_diary');return v?JSON.parse(v):[];}catch(e){return [];}})();
+var frases = (function(){try{var v=localStorage.getItem('ag_frases');return v?JSON.parse(v):[];}catch(e){return [];}})();
+var logros = (function(){try{var v=localStorage.getItem('ag_logros');return v?JSON.parse(v):['primer-paso'];}catch(e){return ['primer-paso'];}})();
+var vdata = (function(){try{var v=localStorage.getItem('ag_vdata');return v?JSON.parse(v):{};}catch(e){return {};}})();
+var rtdone = new Set((function(){try{var v=localStorage.getItem('ag_rtdone');return v?JSON.parse(v):[];}catch(e){return [];}})());
+var rcount = 0;
+var today = new Date().toDateString();
+var now = new Date();
+var DS = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+var MS = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+var dateStr = DS[now.getDay()]+', '+now.getDate()+' de '+MS[now.getMonth()]+' de '+now.getFullYear();
+var obH = [];
+
+
 </script>
 </body>
 </html>
