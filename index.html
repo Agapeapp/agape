@@ -721,7 +721,7 @@ function ld(k,d){try{var v=localStorage.getItem('ag_'+k);return v!==null?JSON.pa
 var GK='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';
 async function ai(msgs,sys,max){
   var m=sys?[{role:'system',content:sys}].concat(msgs):msgs;
-  var r=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+GK},body:JSON.stringify({model:'llama-3.1-8b-instant',max_tokens:max||500,messages:m})});
+  var r=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+GK},body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:max||500,messages:m})});
   var d=await r.json();
   if(d.choices&&d.choices[0])return d.choices[0].message.content;
   throw new Error('no response');
