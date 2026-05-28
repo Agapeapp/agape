@@ -1415,7 +1415,7 @@ var obH=[];
 var OBS='Eres el asistente de bienvenida de Agape, una app espiritual cristiana. Conoce al usuario en espanol, una pregunta a la vez. 1. Saluda y pregunta su nombre. 2. Como se siente - OPCIONES: Con paz | Un poco perdido | Buscando mas | En un momento dificil. 3. Mayor necesidad - OPCIONES: Paz interior | Fortalecer mi fe | Estudiar la Biblia | Apoyo emocional. 4. Tradicion - OPCIONES: Catolico | Evangelico | No denominacional | Prefiero no decir. 5. Frecuencia - OPCIONES: Cada dia | Varios dias | Cuando lo necesite. 6. Mensaje de bienvenida personalizado. Termina con: [DONE]. Reglas: calido, max 3 lineas.';
 
 function startOb(){
-  if(uname){document.getElementById('splash').style.display='none';launch();return;}
+  obH=[];if(uname){document.getElementById('splash').style.display='none';launch();return;}
   var sp=document.getElementById('splash');sp.classList.add('out');
   setTimeout(function(){sp.style.display='none';var ob=document.getElementById('ob');if(ob)ob.classList.add('on');obNext();},600);
 }
@@ -1431,7 +1431,7 @@ function addObMsg(text,isU){
 }
 function obPick(v){document.querySelectorAll('.oob').forEach(function(b){b.style.pointerEvents='none';b.style.opacity='.4';});addObMsg(v,true);obH.push({role:'user',content:v});var obpel=document.getElementById('obp');if(obpel)obpel.style.width=Math.min(100,obH.length/7*100)+'%';obResp();}
 function obSend(){var inp=document.getElementById('obin');if(!inp)return;var t=inp.value.trim();if(!t)return;inp.value='';addObMsg(t,true);obH.push({role:'user',content:t});var obpel=document.getElementById('obp');if(obpel)obpel.style.width=Math.min(100,obH.length/7*100)+'%';obResp();}
-async function obNext(){obH.push({role:'user',content:'Hola, acabo de abrir la app por primera vez.'});await obResp();}
+async function obNext(){if(!Array.isArray(obH))obH=[];obH=[];obH.push({role:'user',content:'Hola, acabo de abrir la app por primera vez.'});await obResp();}
 async function obResp(){
   var ms=document.getElementById('obms');if(!ms)return;
   var ty=document.createElement('div');ty.className='oty';ty.innerHTML='<span></span><span></span><span></span>';ms.appendChild(ty);ms.scrollTop=ms.scrollHeight;
