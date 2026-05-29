@@ -91,6 +91,25 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .itx{font-size:13px;color:var(--text2);line-height:1.65;font-style:italic;}
 /* VERSE */
 .vc{background:var(--bg2);border:0.5px solid var(--border2);border-radius:16px;padding:16px;position:relative;overflow:hidden;}
+/* Devocional del día */
+.dvc{background:linear-gradient(135deg,#1A1200,#1C1500);border:0.5px solid var(--gold);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px;}
+.dvc-hdr{display:flex;justify-content:space-between;align-items:center;}
+.dvc-label{font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.15em;font-weight:500;}
+.dvc-refresh{background:none;border:none;color:var(--text3);font-size:11px;display:flex;align-items:center;gap:4px;cursor:pointer;font-family:'Inter',sans-serif;}
+.dvc-verse{font-family:'Cormorant Garamond',serif;font-size:19px;font-style:italic;color:var(--text);line-height:1.6;}
+.dvc-ref{font-size:11px;color:var(--gold);letter-spacing:.05em;}
+.dvc-divider{height:0.5px;background:rgba(212,168,83,.3);margin:2px 0;}
+.dvc-section-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;}
+.dvc-reflection{font-size:13px;color:var(--text2);line-height:1.75;}
+.dvc-question{font-size:13px;color:var(--text);line-height:1.6;font-style:italic;border-left:2px solid var(--gold);padding-left:10px;}
+.dvc-loading{display:flex;gap:4px;align-items:center;height:20px;}
+.dvc-loading span{width:5px;height:5px;border-radius:50%;background:var(--text3);animation:dvcpulse 1.2s infinite;}
+.dvc-loading span:nth-child(2){animation-delay:.2s;}
+.dvc-loading span:nth-child(3){animation-delay:.4s;}
+@keyframes dvcpulse{0%,80%,100%{opacity:.3}40%{opacity:1}}
+.dvc-actions{display:flex;gap:8px;padding-top:4px;}
+.dvc-btn{flex:1;padding:8px;border:0.5px solid var(--border2);border-radius:20px;background:transparent;color:var(--text2);font-size:12px;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;}
+.dvc-btn:active{background:var(--bg3);}
 .vc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--gold);}
 .vl{font-size:10px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}
 
@@ -508,8 +527,23 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
       <div><div class="gr" id="grt">Buenos días</div><div class="gd" id="grd"></div></div>
       <div class="sp"><svg style="width:14px;height:14px;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 0 1-7 7 7 7 0 0 1-7-7c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg><span id="stxt">0 dias</span></div>
     </div>
-    <div class="ic"><div class="it"><div class="itn">Intención del día</div><div class="itr" onclick="refInt()"><svg style="width:12px;height:12px;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6 M1 20v-6h6 M3.51 9a9 9 0 0 1 14.85-3.36L23 10 M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Renovar</div></div><div class="itx" id="intxt">Cargando...</div></div>
-    <div class="vc"><div class="vl">Versículo del día</div><div class="vv" id="hvv"></div><div class="vr" id="hvr"></div><div class="vb" id="hvb"></div><div class="vs" onclick="shareVerse()"><svg style="width:1em;height:1em;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8 M16 6l-4-4-4 4 M12 2v13"/></svg><span>Compartir</span></div></div>
+    <div class="dvc">
+      <div class="dvc-hdr">
+        <div class="dvc-label">Devocional del día</div>
+        <button class="dvc-refresh" onclick="loadDevocional(true)" title="Nuevo devocional"><svg style="width:12px;height:12px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6 M1 20v-6h6 M3.51 9a9 9 0 0 1 14.85-3.36L23 10 M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Renovar</button>
+      </div>
+      <div class="dvc-verse" id="hvv"></div>
+      <div class="dvc-ref" id="hvr"></div>
+      <div class="dvc-divider"></div>
+      <div class="dvc-section-label">Reflexión</div>
+      <div class="dvc-reflection" id="dvc-ref-txt"><div class="dvc-loading"><span></span><span></span><span></span></div></div>
+      <div class="dvc-section-label" style="margin-top:12px">Para tu día</div>
+      <div class="dvc-question" id="dvc-question"><div class="dvc-loading"><span></span><span></span><span></span></div></div>
+      <div class="dvc-actions">
+        <button class="dvc-btn" onclick="shareVerse()"><svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8 M16 6l-4-4-4 4 M12 2v13"/></svg> Compartir</button>
+        <button class="dvc-btn" onclick="openPg('escucha')"><svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7 M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> ESCUCHA</button>
+      </div>
+    </div>
     <div class="rm"><div class="rmt"><div class="rmtl">Retos de hoy</div><div class="rml" onclick="openPg('retos')">Ver todos →</div></div><div class="rbw"><div class="rbi" id="rmb" style="width:0%"></div></div><div class="rds"><div class="rd" id="rd0"><svg style="width:13px;height:13px;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></i></div><div class="rd" id="rd1"><svg style="width:13px;height:13px;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V6a1 1 0 0 1 2 0v5 M11 5V4a1 1 0 0 1 2 0v7 M7 9.5V9a1 1 0 0 1 2 0v2 M13 4a1 1 0 0 1 2 0v8 M7 13c0 3 1 5 5 5s5-3.134 5-5V9"/></svg></div><div class="rd" id="rd2"><svg style="width:13px;height:13px;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20 M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="rd" id="rd3"><svg style="width:13px;height:13px;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div><div class="rd" id="rd4"><svg style="width:13px;height:13px;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2 M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0 M23 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75"/></svg></div></div></div>
     <div class="hg">
       <div class="hgi" onclick="openPg('oracion')"><div class="hgic" style="background:#2A2000"><svg style="width:1em;height:1em;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="#D4A853" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V6a1 1 0 0 1 2 0v5 M11 5V4a1 1 0 0 1 2 0v7 M7 9.5V9a1 1 0 0 1 2 0v2 M13 4a1 1 0 0 1 2 0v8 M7 13c0 3 1 5 5 5s5-3.134 5-5V9"/></svg></div><div class="hgn">Oracion</div><div class="hgs">Guía diaria</div></div>
@@ -1041,13 +1075,52 @@ function toggleTheme(){
 // =============================================
 // 12. IA - INTENCION
 // =============================================
-async function loadInt(){
-  var saved=ld('int_'+today,null);
-  if(saved){document.getElementById('intxt').textContent=saved;return;}
-  try{var txt=await ai([{role:'user',content:'Genera una breve intención espiritual para hoy. Una frase, calida, cristiana. Sin introduccion. En espanol.'}],null,100);document.getElementById('intxt').textContent=txt;sv('int_'+today,txt);}
-  catch(e){document.getElementById('intxt').textContent='Que hoy puedas sentir la presencia de Dios en cada momento.';}
+async function loadDevocional(force) {
+  var savedRef = ld('dvc_ref_' + today, null);
+  var savedQ = ld('dvc_q_' + today, null);
+  var refEl = document.getElementById('dvc-ref-txt');
+  var qEl = document.getElementById('dvc-question');
+
+  if(savedRef && savedQ && !force) {
+    if(refEl) refEl.textContent = savedRef;
+    if(qEl) qEl.textContent = savedQ;
+    return;
+  }
+
+  var verse = document.getElementById('hvv') ? document.getElementById('hvv').textContent : '';
+  var ref = document.getElementById('hvr') ? document.getElementById('hvr').textContent : '';
+
+  var loading = '<div class="dvc-loading"><span></span><span></span><span></span></div>';
+  if(refEl) refEl.innerHTML = loading;
+  if(qEl) qEl.innerHTML = loading;
+
+  if(force) { sv('dvc_ref_' + today, null); sv('dvc_q_' + today, null); }
+
+  try {
+    var prompt = 'Versículo del día: "' + verse + '" (' + ref + ')
+
+'
+      + 'Responde SOLO con JSON válido sin markdown, exactamente así:
+'
+      + '{"reflexion":"2-3 frases cálidas y prácticas sobre el versículo, en tono cercano, para empezar el día","pregunta":"Una pregunta concreta y personal para aplicar el versículo hoy"}
+'
+      + 'Sin introducción, sin explicaciones, solo el JSON.';
+
+    var resp = await ai([{role:'user', content: prompt}], null, 300);
+    var clean = resp.replace(/```json|```/g,'').trim();
+    var data = JSON.parse(clean);
+
+    if(refEl) refEl.textContent = data.reflexion;
+    if(qEl) qEl.textContent = data.pregunta;
+    sv('dvc_ref_' + today, data.reflexion);
+    sv('dvc_q_' + today, data.pregunta);
+  } catch(e) {
+    if(refEl) refEl.textContent = 'Que este versículo sea tu ancla hoy. Léelo despacio, una vez más, y deja que Dios te hable.';
+    if(qEl) qEl.textContent = '¿En qué área de tu vida necesitas aplicar esta verdad hoy?';
+  }
 }
-async function refInt(){document.getElementById('intxt').textContent='Generando...';sv('int_'+today,null);await loadInt();}
+async function loadInt(){ await loadDevocional(false); }
+async function refInt(){ await loadDevocional(true); }
 
 // =============================================
 // 13. IA - LECTURAS
@@ -2329,7 +2402,7 @@ window.filterBks=filterBks;window.closeBible=closeBible;window.loadCh=loadCh;
 window.openBook=openBook;window.openVP=openVP;window.closeVP=closeVP;window.applyHL=applyHL;
 window.renderMV=renderMV;
 window.toggleFav=toggleFav;window.toggleNote=toggleNote;window.saveVP=saveVP;
-window.shareVP=shareVP;window.shareVerse=shareVerse;window.refInt=refInt;
+window.shareVP=shareVP;window.shareVerse=shareVerse;window.refInt=refInt;window.loadDevocional=loadDevocional;
 window.startT=startT;window.resetT=resetT;window.delMV=delMV;
 window.startEscucha=startEscucha;window.nextEscuchaStep=nextEscuchaStep;
 window.prevEscuchaStep=prevEscuchaStep;window.skipEscuchaStep=skipEscuchaStep;
