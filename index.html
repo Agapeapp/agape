@@ -1656,7 +1656,7 @@ var dateStr = DS[now.getDay()]+', '+now.getDate()+' de '+MS[now.getMonth()]+' de
   }
 }
 async function obNext(){
-  addObMsg('Hola. Bienvenido a Ágape, tu espacio de crecimiento espiritual.\n\n¿Cómo te llamas?', false);
+  addObMsg('Hola. Bienvenido a Ágape, tu espacio de crecimiento espiritual. ¿Cómo te llamas?', false);
 }
 async function obResp(){
   var step=obH.filter(function(m){return m.role==='user';}).length;
@@ -1682,7 +1682,7 @@ async function obResp(){
       'En un momento difícil': 'Dios te encuentra exactamente donde estás. Ágape está aquí para acompañarte en este momento.'
     };
     var finalMsg = msgs[estado] || 'Cada día es una nueva oportunidad para crecer. Ágape está aquí para acompañarte.';
-    addObMsg('¡Todo listo, '+uname+'! 🌿\n\n'+finalMsg, false);
+    addObMsg(''¡Todo listo, '+uname+'! '+finalMsg, false);
     setTimeout(finOb, 2500);
   }
 }
