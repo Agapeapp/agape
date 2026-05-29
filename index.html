@@ -667,7 +667,7 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
         <div class="ob-welcome-desc" id="ob-final-msg">Tu camino espiritual empieza hoy.</div>
         <div class="ob-verse-card">
           <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--text);line-height:1.6" id="ob-final-verse">"Lámpara es a mis pies tu palabra, y lumbrera a mi camino."</div>
-          <div style="font-size:11px;color:var(--gold);margin-top:8px">Salmo 119:105</div>
+          <div style="font-size:11px;color:var(--gold);margin-top:8px" id="ob-final-ref">Salmo 119:105</div>
         </div>
         <button class="ob-cta" onclick="finOb()">Entrar a Ágape</button>
       </div>
@@ -2425,7 +2425,20 @@ function buildObFinal() {
   if(m) m.textContent = msgs[estado] || 'Tu camino espiritual empieza hoy.';
 
   var v = verses[nivel] || {v:'"Lámpara es a mis pies tu palabra, y lumbrera a mi camino."', r:'Salmo 119:105'};
-  if(ve) ve.innerHTML = v.v + '<br><span style="font-size:11px;color:var(--gold);font-style:normal">' + v.r + '</span>';
+  if(ve) ve.textContent = v.v;
+  var vr = document.getElementById('ob-final-ref');
+  if(vr) vr.textContent = v.r;
+}
+
+function finOb(){
+  var ob=document.getElementById('ob');
+  if(ob)ob.classList.remove('on');
+  if(!ld('email',null)){
+    var em=document.getElementById('em');
+    if(em)em.classList.add('on');
+  } else {
+    launch();
+  }
 }
 
 function obSkip() {
