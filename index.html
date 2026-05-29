@@ -400,17 +400,16 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .fca{font-size:11px;color:var(--text3);}
 .fcl{display:flex;align-items:center;justify-content:center;gap:8px;padding:20px;color:var(--text3);font-size:12px;}
 /* MODAL */
-.mo{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:300;padding:24px;}
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;z-index:300;padding:24px;}
 .mo.on{display:flex;}
-.mod{background:var(--bg2);border:0.5px solid var(--border2);border-radius:22px;padding:28px 24px;max-width:340px;width:100%;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;animation:pi .35s ease;}
-@keyframes pi{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
-.moi{width:72px;height:72px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;background:var(--gd);}
-.moi i{font-size:34px;color:var(--gold);}
-.mot{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--text);}
-.mob{font-size:13px;color:var(--text2);line-height:1.7;}
-.mof{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--text);line-height:1.65;padding:12px 16px;background:var(--bg3);border-radius:10px;border-left:2px solid var(--gold);width:100%;}
-.moa{font-size:11px;color:var(--text3);}
-.mobtn{padding:11px 32px;border:0.5px solid var(--gold);border-radius:30px;background:none;color:var(--gold);font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;}
+.mod{background:linear-gradient(160deg,#1A1200,#0D0D0D);border:0.5px solid var(--gold);border-radius:24px;padding:32px 24px;max-width:340px;width:100%;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;animation:mopop .5s cubic-bezier(.175,.885,.32,1.275);}
+@keyframes mopop{from{transform:scale(.7) translateY(40px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.mo-xp{font-family:'Cormorant Garamond',serif;font-size:52px;color:var(--gold);line-height:1;font-weight:300;text-shadow:0 0 30px rgba(212,168,83,.5);}
+.mo-frase{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:#F0EDE8;line-height:1.5;padding:0 8px;}
+.mo-autor{font-size:11px;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;}
+.mo-reto{font-size:12px;color:var(--text3);border:0.5px solid var(--border);border-radius:20px;padding:6px 16px;}
+.mobtn{padding:13px 40px;border:0.5px solid var(--gold);border-radius:30px;background:var(--gd);color:var(--gold);font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;margin-top:4px;width:100%;}
+.mobtn:active{background:rgba(212,168,83,.2);}
 /* ESCUCHA */
 .esc-step{background:var(--bg2);border:0.5px solid var(--border);border-radius:14px;padding:14px;display:flex;gap:12px;align-items:flex-start;}
 .esc-letra{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;font-family:'Cormorant Garamond',serif;flex-shrink:0;}
@@ -463,13 +462,13 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 
 <!-- MODAL -->
 <div class="mo" id="mo" onclick="closeMo(event)">
-  <div class="mod">
-    <div class="moi"><i id="moic" class="ti ti-award"></i></div>
-    <div class="mot" id="mot"></div>
-    <div class="mob" id="mob"></div>
-    <div class="mof" id="mof"></div>
-    <div class="moa" id="moa"></div>
-    <button class="mobtn" onclick="closeMo()">Gracias!</button>
+  <canvas id="mo-canvas" style="position:fixed;inset:0;pointer-events:none;z-index:299;"></canvas>
+  <div class="mod" id="mod">
+    <div class="mo-xp" id="mo-xp"></div>
+    <div class="mo-frase" id="mof"></div>
+    <div class="mo-autor" id="moa"></div>
+    <div class="mo-reto" id="mob"></div>
+    <button class="mobtn" onclick="closeMo()">¡Amén!</button>
   </div>
 </div>
 
@@ -1064,14 +1063,69 @@ function renderFrases(){
 // 10. MODAL
 // =============================================
 function showModal(name,pts,f){
-  document.getElementById('moic').className='ti '+f.i;
-  document.getElementById('mot').textContent='+'+pts+' XP desbloqueados!';
-  document.getElementById('mob').textContent='"'+name+'" completado. Cada paso cuenta!';
+  document.getElementById('mo-xp').textContent='+'+pts+' XP';
   document.getElementById('mof').textContent=f.t;
   document.getElementById('moa').textContent=f.a;
+  document.getElementById('mob').textContent=name+' completado';
   document.getElementById('mo').classList.add('on');
+  launchParticles();
 }
-function closeMo(e){if(!e||e.target===document.getElementById('mo'))document.getElementById('mo').classList.remove('on');}
+function closeMo(e){
+  if(!e||e.target===document.getElementById('mo')){
+    document.getElementById('mo').classList.remove('on');
+    stopParticles();
+  }
+}
+var _praf=null;
+function launchParticles(){
+  var canvas=document.getElementById('mo-canvas');
+  var W=window.innerWidth,H=window.innerHeight;
+  canvas.width=W;canvas.height=H;
+  canvas.style.display='block';
+  var ctx=canvas.getContext('2d');
+  var colors=['#D4A853','#F0EDE8','#E8C97A','#fff','#B8860B','#FFD700'];
+  var particles=[];
+  for(var i=0;i<90;i++){
+    var ang=Math.random()*Math.PI*2;
+    var spd=3+Math.random()*6;
+    particles.push({
+      x:W/2,y:H*0.55,
+      vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd-4,
+      r:2+Math.random()*4,
+      c:colors[Math.floor(Math.random()*colors.length)],
+      alpha:1,rot:Math.random()*360,
+      rotSpd:(Math.random()-0.5)*8,
+      shape:Math.random()>0.5?'circle':'rect'
+    });
+  }
+  var start=null;
+  function draw(ts){
+    if(!start)start=ts;
+    var el=ts-start;
+    ctx.clearRect(0,0,W,H);
+    var alive=false;
+    particles.forEach(function(p){
+      p.x+=p.vx;p.y+=p.vy;p.vy+=0.18;p.vx*=0.99;
+      p.rot+=p.rotSpd;
+      p.alpha=Math.max(0,1-el/2200);
+      if(p.alpha>0){alive=true;}
+      ctx.save();ctx.globalAlpha=p.alpha;ctx.fillStyle=p.c;
+      ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);
+      if(p.shape==='rect'){ctx.fillRect(-p.r,-p.r/2,p.r*2,p.r);}
+      else{ctx.beginPath();ctx.arc(0,0,p.r,0,Math.PI*2);ctx.fill();}
+      ctx.restore();
+    });
+    if(alive)_praf=requestAnimationFrame(draw);
+    else{canvas.style.display='none';}
+  }
+  if(_praf)cancelAnimationFrame(_praf);
+  _praf=requestAnimationFrame(draw);
+}
+function stopParticles(){
+  if(_praf){cancelAnimationFrame(_praf);_praf=null;}
+  var canvas=document.getElementById('mo-canvas');
+  if(canvas){canvas.style.display='none';var ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);}
+}
 
 // =============================================
 // 11. TEMA
