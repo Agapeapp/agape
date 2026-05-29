@@ -872,8 +872,7 @@ buildBible();
 // =============================================
 // 5. NAV
 // =============================================
-var PGS={home:'pg-home',retos:'pg-retos',oracion:'pg-oracion',biblia:'pg-biblia',misv:'pg-misv',lecturas:'pg-lecturas',diario:'pg-diario',escucha:'pg-escucha',planes:'pg-planes',plan:'pg-plan',foro:'pg-foro',chat:'pg-chat',perfil:'pg-perfil'};
-var NBS={biblia:'nb-biblia',escucha:'nb-escucha',foro:'nb-foro',perfil:'nb-perfil'};
+
 function openPg(id){
   if(!PGS[id]){console.warn('openPg: unknown page',id);return;}
   var pgEl=document.getElementById(PGS[id]);
@@ -1650,6 +1649,9 @@ var DS = ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
 var MS = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 var dateStr = DS[now.getDay()]+', '+now.getDate()+' de '+MS[now.getMonth()]+' de '+now.getFullYear();
 
+
+var PGS={home:'pg-home',retos:'pg-retos',oracion:'pg-oracion',biblia:'pg-biblia',misv:'pg-misv',lecturas:'pg-lecturas',diario:'pg-diario',escucha:'pg-escucha',planes:'pg-planes',plan:'pg-plan',foro:'pg-foro',chat:'pg-chat',perfil:'pg-perfil'};
+var NBS={biblia:'nb-biblia',escucha:'nb-escucha',foro:'nb-foro',perfil:'nb-perfil'};
 
 </script>
 </body>
