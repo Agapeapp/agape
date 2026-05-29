@@ -25,9 +25,12 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .stag{font-size:10px;color:var(--text3);letter-spacing:.2em;text-transform:uppercase;}
 .sbtn{margin-top:10px;padding:13px 40px;border:0.5px solid var(--gold);border-radius:30px;background:transparent;color:var(--gold);font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;}
 /* ONBOARDING */
-#ob{position:absolute;inset:0;background:var(--bg);display:none;flex-direction:column;z-index:150;}
+#ob{position:absolute;inset:0;background:var(--bg);display:none;flex-direction:column;z-index:150;align-items:center;justify-content:center;}
 #ob.on{display:flex;}
-.ob-hd{padding:20px 20px 0;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.ob-wrap{width:100%;max-width:520px;height:100%;max-height:100%;display:flex;flex-direction:column;}
+@media(min-height:700px) and (min-width:600px){.ob-wrap{max-height:700px;border-radius:20px;overflow:hidden;border:0.5px solid var(--border);}}
+.ob-hd{padding:20px 20px 0;display:flex;align-items:center;gap:10px;flex-shrink:0;background:var(--bg);}
+.ob-wrap{width:100%;max-width:520px;height:100%;display:flex;flex-direction:column;background:var(--bg);}
 .ob-lg{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;letter-spacing:2px;}
 .ob-lg span{color:var(--gold);}
 .ob-pw{flex:1;height:2px;background:var(--border);border-radius:2px;overflow:hidden;margin-left:8px;}
@@ -482,6 +485,7 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 
 <!-- ONBOARDING -->
 <div id="ob">
+  <div class="ob-wrap">
   <div class="ob-hd">
     <svg width="22" height="22" viewBox="0 0 72 72"><rect width="72" height="72" rx="14" fill="#1C1C1C"/><rect x="33" y="12" width="6" height="34" rx="3" fill="#D4A853"/><rect x="17" y="24" width="38" height="6" rx="3" fill="#D4A853"/><path d="M18 56 Q24 47 30 56 Q36 65 42 56 Q48 47 54 56" stroke="#D4A853" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".75"/></svg>
     <div class="ob-lg">A<span>gape</span></div>
@@ -493,6 +497,7 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
     <button class="ob-sn" onclick="obSend()">
       <svg style="width:15px;height:15px" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"><path d="M22 2L11 13 M22 2L15 22 11 13 2 9z"/></svg>
     </button>
+  </div>
   </div>
 </div>
 
