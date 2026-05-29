@@ -93,7 +93,7 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .vc{background:var(--bg2);border:0.5px solid var(--border2);border-radius:16px;padding:16px;position:relative;overflow:hidden;}
 .vc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--gold);}
 .vl{font-size:10px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}
-.vv{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--text);line-height:1.65;margin-bottom:4px;}
+
 .vr{font-size:11px;color:var(--gold);margin-bottom:10px;}
 .vb{font-size:13px;color:var(--text2);line-height:1.7;}
 .vs{display:flex;align-items:center;gap:5px;margin-top:12px;padding-top:10px;border-top:0.5px solid var(--border);font-size:11px;color:var(--text3);cursor:pointer;}
@@ -148,6 +148,12 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .bss input{flex:1;border:none;background:transparent;padding:11px 0;font-size:13px;font-family:'Inter',sans-serif;color:var(--text);outline:none;}
 .bscr{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:12px;}
 .bgr{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.bk{background:var(--bg2);border:0.5px solid var(--border);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--text);cursor:pointer;transition:background .15s;}
+.bk:active{background:var(--bg3);}
+.chs{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-bottom:0.5px solid var(--border);flex-shrink:0;}
+.ch{min-width:34px;padding:5px 8px;background:var(--bg2);border:0.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--text2);cursor:pointer;text-align:center;}
+.ch.on{background:var(--gd);border-color:var(--gold);color:var(--gold);}
+.vv{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--text);line-height:1.65;margin-bottom:4px;cursor:pointer;border-radius:4px;transition:background .1s;display:inline;}
 .bc{background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:12px;cursor:pointer;}
 .bc:active{border-color:var(--gold);}
 .bcn{font-size:13px;color:var(--text);}
@@ -1608,6 +1614,220 @@ function toast(msg){var t=document.getElementById('tst');if(!t){t=document.creat
 function resetApp(){if(confirm('Seguro? Esto borrara tu perfil.')){['name','init','xp','streak','totrt','rtdone','lmode','diary','frases','logros','lo','email','vdata','escuchas','plan_progress'].forEach(function(k){localStorage.removeItem('ag_'+k);});location.reload();}}
 
 // =============================================
+// MÓDULO BIBLIA
+// =============================================
+var curBook=null,curChap=1,curVerse=null,curRef=null;
+var HL_COLORS={hy:'rgba(255,220,50,.5)',hg2:'rgba(80,200,200,.5)',hgr:'rgba(100,200,100,.5)',hpu:'rgba(180,140,255,.5)',hb:'rgba(100,160,255,.5)',hpk:'rgba(255,160,180,.5)'};
+
+function buildBible(){
+  var otg=document.getElementById('otg');
+  var ntg=document.getElementById('ntg');
+  if(!otg||!ntg)return;
+  otg.innerHTML=OT.map(function(b){return '<div class="bk" onclick="openBook(\''+b.n+'\')">'+b.n+'</div>';}).join('');
+  ntg.innerHTML=NT.map(function(b){return '<div class="bk" onclick="openBook(\''+b.n+'\')">'+b.n+'</div>';}).join('');
+}
+
+function filterBks(){
+  var q=(document.getElementById('bsi').value||'').toLowerCase();
+  var all=document.querySelectorAll('.bk');
+  all.forEach(function(el){
+    el.style.display=(!q||el.textContent.toLowerCase().includes(q))?'':'none';
+  });
+}
+
+function openBook(name){
+  curBook=name;curChap=1;
+  var books=OT.concat(NT);
+  var b=books.find(function(x){return x.n===name;});
+  if(!b)return;
+  var rdtl=document.getElementById('rdtl');if(rdtl)rdtl.textContent=name;
+  var chs=document.getElementById('chs');
+  if(chs){
+    var html='';
+    for(var i=1;i<=b.c;i++){
+      html+='<button class="ch'+(i===1?' on':'')+'" onclick="loadCh(\''+name+'\','+i+',this)">'+i+'</button>';
+    }
+    chs.innerHTML=html;
+  }
+  var rdr=document.getElementById('rdr');if(rdr)rdr.style.display='flex';
+  var blist=document.getElementById('blist');if(blist)blist.style.display='none';
+  loadCh(name,1,chs?chs.querySelector('.ch'):null);
+}
+
+function closeBible(){
+  var rdr=document.getElementById('rdr');if(rdr)rdr.style.display='none';
+  var blist=document.getElementById('blist');if(blist)blist.style.display='';
+  curBook=null;
+}
+
+async function loadCh(bname,ch,btn){
+  curBook=bname;curChap=ch;
+  var vout=document.getElementById('vout');
+  if(!vout)return;
+  vout.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">Cargando...</div>';
+  // Update active chapter button
+  if(btn){
+    document.querySelectorAll('.ch').forEach(function(b){b.classList.remove('on');});
+    btn.classList.add('on');
+    btn.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
+  }
+  var code=BKMAP[bname];
+  if(!code){vout.innerHTML='<div style="padding:20px;color:var(--text3)">Libro no disponible</div>';return;}
+  try{
+    var url='https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/es-rv1960/books/'+code+'/chapters/'+ch+'.json';
+    var r=await fetch(url);
+    if(!r.ok)throw new Error('fetch');
+    var data=await r.json();
+    var verses=data.verses||data;
+    var saved=vdata[bname+'.'+ch]||{};
+    vout.innerHTML=verses.map(function(v,i){
+      var vkey=bname+'.'+ch+'.'+v.verse;
+      var hl=saved[v.verse]?saved[v.verse].hl:'';
+      var style=hl&&HL_COLORS[hl]?'background:'+HL_COLORS[hl]+';border-radius:3px;':'';
+      return '<span class="vv" id="v'+v.verse+'" style="'+style+'" onclick="openVP(\''+bname+'\','+ch+','+v.verse+','+JSON.stringify(v.text).replace(/'/g,"\\'")+')"><sup class="vn">'+v.verse+'</sup> '+v.text+' </span>';
+    }).join('');
+    // scroll reader back to top
+    var rdb=document.querySelector('.rdb');if(rdb)rdb.scrollTop=0;
+    // mark bible reto
+    if(!rtdone.has('biblia')){doneReto('biblia','Lee un capitulo',25,'biblia');}
+  }catch(e){
+    vout.innerHTML='<div style="padding:20px;color:var(--text3);font-size:13px">No se pudo cargar este capítulo. Verifica tu conexión.</div>';
+  }
+}
+
+function openVP(bname,ch,vnum,text){
+  curVerse={bname:bname,ch:ch,vnum:vnum,text:text};
+  curRef=bname+' '+ch+':'+vnum;
+  var vpvt=document.getElementById('vpvt');if(vpvt)vpvt.textContent=text+' ('+curRef+')';
+  var saved=(vdata[bname+'.'+ch]||{})[vnum]||{};
+  var vpna=document.getElementById('vpna');if(vpna)vpna.value=saved.note||'';
+  // Update highlight active state
+  ['hy','hg2','hgr','hpu','hb','hpk'].forEach(function(c){
+    var el=document.getElementById('vpc-'+c);
+    if(el)el.style.outline=saved.hl===c?'2px solid var(--text)':'none';
+  });
+  // Update fav button
+  var favs=vdata.favs||[];
+  var vpfb=document.getElementById('vpfb');
+  if(vpfb)vpfb.style.color=favs.includes(curRef)?'var(--gold)':'';
+  var vpna2=document.getElementById('vpna');if(vpna2)vpna2.style.display='none';
+  var vps=document.querySelector('.vps');if(vps)vps.style.display='none';
+  document.getElementById('vpp').classList.add('on');
+  document.getElementById('vpb').classList.add('on');
+}
+
+function closeVP(){
+  var vpp=document.getElementById('vpp');if(vpp)vpp.classList.remove('on');
+  var vpb=document.getElementById('vpb');if(vpb)vpb.classList.remove('on');
+  curVerse=null;
+}
+
+function applyHL(color){
+  if(!curVerse)return;
+  var key=curVerse.bname+'.'+curVerse.ch;
+  if(!vdata[key])vdata[key]={};
+  if(!vdata[key][curVerse.vnum])vdata[key][curVerse.vnum]={};
+  vdata[key][curVerse.vnum].hl=color;
+  sv('vdata',vdata);
+  // Update visual
+  var el=document.getElementById('v'+curVerse.vnum);
+  if(el){
+    if(color&&HL_COLORS[color])el.style.background=HL_COLORS[color];
+    else el.style.background='';
+  }
+  ['hy','hg2','hgr','hpu','hb','hpk'].forEach(function(c){
+    var btn=document.getElementById('vpc-'+c);
+    if(btn)btn.style.outline=color===c?'2px solid var(--text)':'none';
+  });
+  toast('Subrayado guardado');
+}
+
+function toggleFav(){
+  if(!curVerse)return;
+  if(!vdata.favs)vdata.favs=[];
+  var idx=vdata.favs.indexOf(curRef);
+  var isFav=idx===-1;
+  if(isFav)vdata.favs.push(curRef);
+  else vdata.favs.splice(idx,1);
+  sv('vdata',vdata);
+  var vpfb=document.getElementById('vpfb');
+  if(vpfb)vpfb.style.color=isFav?'var(--gold)':'';
+  toast(isFav?'Añadido a favoritos':'Eliminado de favoritos');
+}
+
+function toggleNote(){
+  var vpna=document.getElementById('vpna');
+  var vps=document.querySelector('.vps');
+  if(!vpna||!vps)return;
+  var visible=vpna.style.display!=='none';
+  vpna.style.display=visible?'none':'block';
+  vps.style.display=visible?'none':'block';
+}
+
+function saveVP(){
+  if(!curVerse)return;
+  var key=curVerse.bname+'.'+curVerse.ch;
+  if(!vdata[key])vdata[key]={};
+  if(!vdata[key][curVerse.vnum])vdata[key][curVerse.vnum]={};
+  var vpna=document.getElementById('vpna');
+  if(vpna)vdata[key][curVerse.vnum].note=vpna.value;
+  sv('vdata',vdata);
+  toast('Nota guardada');
+  closeVP();
+}
+
+function shareVP(){
+  if(!curVerse)return;
+  var t=curVerse.text+'\n— '+curRef+'\n\nÁgape App';
+  if(navigator.share)navigator.share({title:'Ágape',text:t});
+  else{if(navigator.clipboard)navigator.clipboard.writeText(t);toast('Versículo copiado!');}
+}
+
+function renderMV(type){
+  if(type==='fav'){
+    var el=document.getElementById('mvfl');if(!el)return;
+    var favs=vdata.favs||[];
+    if(!favs.length){el.innerHTML='<div style="color:var(--text3);font-size:13px;text-align:center;padding:30px">Aún no tienes versículos favoritos.<br>Toca un versículo en la Biblia y pulsa ⭐ Favorito.</div>';return;}
+    el.innerHTML=favs.map(function(ref){return '<div class="mv-item" style="background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:8px"><div style="font-size:12px;color:var(--gold);margin-bottom:6px">'+ref+'</div></div>';}).join('');
+  } else if(type==='hl'){
+    var el2=document.getElementById('mvhl');if(!el2)return;
+    var entries=[];
+    Object.keys(vdata).forEach(function(k){
+      if(k==='favs')return;
+      var parts=k.split('.');if(parts.length!==2)return;
+      var bn=parts[0],ch=parts[1];
+      var chData=vdata[k];
+      Object.keys(chData).forEach(function(vnum){
+        if(chData[vnum]&&chData[vnum].hl)entries.push({ref:bn+' '+ch+':'+vnum,hl:chData[vnum].hl});
+      });
+    });
+    if(!entries.length){el2.innerHTML='<div style="color:var(--text3);font-size:13px;text-align:center;padding:30px">Aún no tienes versículos subrayados.</div>';return;}
+    el2.innerHTML=entries.map(function(e){var bg=HL_COLORS[e.hl]||'transparent';return '<div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:8px;border-left:4px solid '+bg+'"><div style="font-size:12px;color:var(--text2)">'+e.ref+'</div></div>';}).join('');
+  } else if(type==='nt'){
+    var el3=document.getElementById('mvntl');if(!el3)return;
+    var notes=[];
+    Object.keys(vdata).forEach(function(k){
+      if(k==='favs')return;
+      var parts=k.split('.');if(parts.length!==2)return;
+      var bn=parts[0],ch=parts[1];
+      var chData=vdata[k];
+      Object.keys(chData).forEach(function(vnum){
+        if(chData[vnum]&&chData[vnum].note)notes.push({ref:bn+' '+ch+':'+vnum,note:chData[vnum].note});
+      });
+    });
+    if(!notes.length){el3.innerHTML='<div style="color:var(--text3);font-size:13px;text-align:center;padding:30px">Aún no tienes notas.</div>';return;}
+    el3.innerHTML=notes.map(function(n){return '<div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:8px"><div style="font-size:12px;color:var(--gold);margin-bottom:4px">'+n.ref+'</div><div style="font-size:13px;color:var(--text2)">'+n.note+'</div></div>';}).join('');
+  }
+}
+
+function delMV(ref){
+  if(!vdata.favs)return;
+  vdata.favs=vdata.favs.filter(function(r){return r!==ref;});
+  sv('vdata',vdata);
+  renderMV('fav');
+}
+
+// =============================================
 // EXPONER FUNCIONES GLOBALMENTE
 // =============================================
 window.openPg=openPg;window.goHome=goHome;window.startOb=startOb;
@@ -1616,7 +1836,8 @@ window.switchTab=switchTab;window.switchMV=switchMV;window.cSend=cSend;
 window.obSend=obSend;window.submitEmail=submitEmail;window.skipEmail=skipEmail;
 window.saveDiary=saveDiary;window.fPost=fPost;window.resetApp=resetApp;
 window.filterBks=filterBks;window.closeBible=closeBible;window.loadCh=loadCh;
-window.openBook=openBook;window.closeVP=closeVP;window.applyHL=applyHL;
+window.openBook=openBook;window.openVP=openVP;window.closeVP=closeVP;window.applyHL=applyHL;
+window.renderMV=renderMV;
 window.toggleFav=toggleFav;window.toggleNote=toggleNote;window.saveVP=saveVP;
 window.shareVP=shareVP;window.shareVerse=shareVerse;window.refInt=refInt;
 window.startT=startT;window.resetT=resetT;window.delMV=delMV;
@@ -1655,66 +1876,4 @@ var NBS={biblia:'nb-biblia',escucha:'nb-escucha',foro:'nb-foro',perfil:'nb-perfi
 
 </script>
 </body>
-</htmlasync function obResp(){
-  var step=obH.filter(function(m){return m.role==='user';}).length;
-  var obpel=document.getElementById('obp');if(obpel)obpel.style.width=Math.round((step/5)*100)+'%';
-  if(step===1){
-    var name=obH[obH.length-1].content;
-    uname=name;uinit=name.slice(0,2).toUpperCase();sv('name',uname);sv('init',uinit);
-    addObMsg('¡Qué bonito nombre, '+name+'! ¿Cómo te sientes espiritualmente ahora mismo? OPCIONES: Con paz | Un poco perdido | Buscando más | En un momento difícil',false);
-  }else if(step===2){
-    addObMsg('¿Qué es lo que más necesitas en este momento? OPCIONES: Paz interior | Fortalecer mi fe | Entender la Biblia | Apoyo en algo difícil',false);
-  }else if(step===3){
-    addObMsg('¿Con qué tradición cristiana te identificas? OPCIONES: Católico | Evangélico | No denominacional | Prefiero no decir',false);
-  }else if(step===4){
-    addObMsg('¿Con qué frecuencia te gustaría usar Ágape? OPCIONES: Cada día | Varios días a la semana | Cuando lo necesite',false);
-  }else{
-    var ms=document.getElementById('obms');
-    var ty=document.createElement('div');ty.className='oty';ty.innerHTML='<span></span><span></span><span></span>';
-    if(ms){ms.appendChild(ty);ms.scrollTop=ms.scrollHeight;}
-    var estado=obH[1]?obH[1].content:'';
-    var necesidad=obH[2]?obH[2].content:'';
-    var prompt='Da un mensaje de bienvenida calido y esperanzador de exactamente 2 lineas para una persona llamada '+uname+' que se siente "'+estado+'" y necesita "'+necesidad+'". Solo el mensaje final, en espanol, sin introduccion.';
-    try{
-      var reply=await ai([{role:'user',content:prompt}],null,150);
-      if(ty.parentNode)ty.remove();
-      addObMsg(reply,false);
-    }catch(e){
-      if(ty.parentNode)ty.remove();
-      addObMsg('Agape esta aqui para acompanarte en cada paso de tu camino de fe. Bienvenido, '+uname+'.',false);
-    }
-    setTimeout(finOb,2500);
-  }
-}
-async function obNext(){
-  addObMsg('Hola. Bienvenido a Ágape, tu espacio de crecimiento espiritual. ¿Cómo te llamas?', false);
-}
-async function obResp(){
-  var step=obH.filter(function(m){return m.role==='user';}).length;
-  var obpel=document.getElementById('obp');if(obpel)obpel.style.width=Math.round((step/5)*100)+'%';
-  
-  if(step===1){
-    var name=obH[obH.length-1].content;
-    uname=name;uinit=name.slice(0,2).toUpperCase();sv('name',uname);sv('init',uinit);
-    addObMsg('¡Qué bonito nombre, '+name+'!\n\n¿Cómo te sientes espiritualmente en este momento? OPCIONES: Con paz | Un poco perdido | Buscando más | En un momento difícil', false);
-  } else if(step===2){
-    addObMsg('Gracias por compartir eso.\n\n¿Qué es lo que más necesitas ahora mismo? OPCIONES: Paz interior | Fortalecer mi fe | Entender la Biblia | Apoyo en algo difícil', false);
-  } else if(step===3){
-    addObMsg('¿Con qué tradición cristiana te identificas? OPCIONES: Católico | Evangélico | No denominacional | Prefiero no decir', false);
-  } else if(step===4){
-    addObMsg('¿Con qué frecuencia te gustaría usar Ágape? OPCIONES: Cada día | Varios días a la semana | Cuando lo necesite', false);
-  } else {
-    // Final message - fixed but personalized
-    var estado=obH[1]?obH[1].content:'';
-    var msgs = {
-      'Con paz': 'Qué regalo es llegar desde un lugar de paz. Ágape está aquí para ayudarte a seguir creciendo en esa calma.',
-      'Un poco perdido': 'No estás solo en ese caminar. Ágape es el espacio donde puedes encontrar dirección, paso a paso.',
-      'Buscando más': 'Esa búsqueda ya es una oración. Aquí encontrarás herramientas para profundizar cada día.',
-      'En un momento difícil': 'Dios te encuentra exactamente donde estás. Ágape está aquí para acompañarte en este momento.'
-    };
-    var finalMsg = msgs[estado] || 'Cada día es una nueva oportunidad para crecer. Ágape está aquí para acompañarte.';
-    addObMsg(''¡Todo listo, '+uname+'! '+finalMsg, false);
-    setTimeout(finOb, 2500);
-  }
-}
->
+</html>
