@@ -53,6 +53,27 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .ob-in{flex:1;border:0.5px solid var(--border2);border-radius:20px;padding:10px 15px;font-size:14px;font-family:'Inter',sans-serif;background:var(--bg2);color:var(--text);outline:none;resize:none;max-height:80px;}
 .ob-sn{width:38px;height:38px;border-radius:50%;border:0.5px solid var(--gold);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .ob-sn i{font-size:15px;color:var(--gold);}
+/* New visual onboarding */
+.ob-screen{flex:1;display:flex;flex-direction:column;overflow-y:auto;}
+.ob-welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:32px 24px;text-align:center;gap:16px;}
+.ob-welcome-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--text);letter-spacing:4px;}
+.ob-welcome-sub{font-size:11px;color:var(--text3);letter-spacing:.2em;text-transform:uppercase;}
+.ob-welcome-desc{font-size:15px;color:var(--text2);line-height:1.7;max-width:280px;}
+.ob-cta{width:100%;max-width:320px;padding:16px;background:var(--gold);border:none;border-radius:30px;color:#0D0D0D;font-size:15px;font-family:'Inter',sans-serif;font-weight:600;cursor:pointer;margin-top:8px;}
+.ob-cta:active{opacity:.85;}
+.ob-skip{font-size:12px;color:var(--text3);cursor:pointer;text-decoration:underline;margin-top:4px;}
+.ob-step-wrap{display:flex;flex-direction:column;gap:20px;padding:28px 20px;flex:1;}
+.ob-q{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--text);line-height:1.3;}
+.ob-qs{font-size:13px;color:var(--text3);line-height:1.6;margin-top:-10px;}
+.ob-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.ob-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:16px;padding:16px 12px;cursor:pointer;display:flex;flex-direction:column;gap:6px;transition:all .2s;text-align:center;}
+.ob-card:active,.ob-card.sel{border-color:var(--gold);background:rgba(212,168,83,.08);}
+.ob-card-icon{font-size:26px;}
+.ob-card-title{font-size:13px;color:var(--text);font-weight:500;}
+.ob-card-sub{font-size:11px;color:var(--text3);line-height:1.4;}
+.ob-name-in{width:100%;border:0.5px solid var(--border2);border-radius:14px;padding:14px 16px;font-size:18px;font-family:'Cormorant Garamond',serif;background:var(--bg2);color:var(--text);outline:none;box-sizing:border-box;}
+.ob-name-in:focus{border-color:var(--gold);}
+.ob-verse-card{background:var(--bg2);border:0.5px solid var(--gold);border-radius:14px;padding:16px;width:100%;box-sizing:border-box;text-align:left;}
 /* EMAIL */
 #em{position:absolute;inset:0;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:160;padding:32px 28px;text-align:center;gap:18px;}
 #em.on{display:flex;}
@@ -517,18 +538,130 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 <!-- ONBOARDING -->
 <div id="ob">
   <div class="ob-wrap">
-  <div class="ob-hd">
-    <svg width="22" height="22" viewBox="0 0 72 72"><rect width="72" height="72" rx="14" fill="#1C1C1C"/><rect x="33" y="12" width="6" height="34" rx="3" fill="#D4A853"/><rect x="17" y="24" width="38" height="6" rx="3" fill="#D4A853"/><path d="M18 56 Q24 47 30 56 Q36 65 42 56 Q48 47 54 56" stroke="#D4A853" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".75"/></svg>
-    <div class="ob-lg">A<span>gape</span></div>
-    <div class="ob-pw"><div class="ob-pb" id="obp"></div></div>
-  </div>
-  <div class="ob-ms" id="obms"></div>
-  <div class="ob-ft">
-    <input class="ob-in" id="obin" placeholder="Escribe tu nombre..." style="max-height:44px" onkeydown="if(event.key==='Enter')obSend()"/>
-    <button class="ob-sn" onclick="obSend()">
-      <svg style="width:15px;height:15px" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"><path d="M22 2L11 13 M22 2L15 22 11 13 2 9z"/></svg>
-    </button>
-  </div>
+    <!-- Step 0: Welcome -->
+    <div class="ob-screen" id="obs-0">
+      <div class="ob-welcome">
+        <svg width="64" height="64" viewBox="0 0 72 72"><rect width="72" height="72" rx="18" fill="#1C1C1C"/><rect x="33" y="12" width="6" height="34" rx="3" fill="#D4A853"/><rect x="17" y="24" width="38" height="6" rx="3" fill="#D4A853"/><path d="M18 56 Q24 47 30 56 Q36 65 42 56 Q48 47 54 56" stroke="#D4A853" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".75"/></svg>
+        <div class="ob-welcome-title">Ágape</div>
+        <div class="ob-welcome-sub">Fe · Comunidad · Palabra</div>
+        <div class="ob-welcome-desc">Un espacio para conocer a Dios de verdad, un día a la vez.</div>
+        <button class="ob-cta" onclick="obNext(0)">Comenzar mi camino</button>
+        <div class="ob-skip" onclick="obSkip()">Ya tengo cuenta</div>
+      </div>
+    </div>
+    <!-- Step 1: Name -->
+    <div class="ob-screen" id="obs-1" style="display:none">
+      <div class="ob-step-wrap">
+        <div class="ob-pw"><div class="ob-pb" id="obp" style="width:20%"></div></div>
+        <div class="ob-q">¿Cómo te llamas?</div>
+        <div class="ob-qs">Así podré acompañarte de forma personal.</div>
+        <input class="ob-name-in" id="obin" placeholder="Tu nombre..." onkeydown="if(event.key==='Enter')obNext(1)" autofocus/>
+        <button class="ob-cta" onclick="obNext(1)">Continuar</button>
+      </div>
+    </div>
+    <!-- Step 2: Spiritual state -->
+    <div class="ob-screen" id="obs-2" style="display:none">
+      <div class="ob-step-wrap">
+        <div class="ob-pw"><div class="ob-pb" id="obp2" style="width:40%"></div></div>
+        <div class="ob-q">¿Cómo estás espiritualmente ahora mismo?</div>
+        <div class="ob-qs">No hay respuesta correcta. Solo sé honesto.</div>
+        <div class="ob-cards" id="ob-cards-2">
+          <div class="ob-card" onclick="obSelect(2,this,'Con paz')">
+            <div class="ob-card-icon">🕊️</div>
+            <div class="ob-card-title">Con paz</div>
+            <div class="ob-card-sub">Quiero seguir creciendo</div>
+          </div>
+          <div class="ob-card" onclick="obSelect(2,this,'Buscando más')">
+            <div class="ob-card-icon">🔍</div>
+            <div class="ob-card-title">Buscando más</div>
+            <div class="ob-card-sub">Quiero profundizar en la fe</div>
+          </div>
+          <div class="ob-card" onclick="obSelect(2,this,'Un poco perdido')">
+            <div class="ob-card-icon">🌫️</div>
+            <div class="ob-card-title">Un poco perdido</div>
+            <div class="ob-card-sub">Necesito dirección y claridad</div>
+          </div>
+          <div class="ob-card" onclick="obSelect(2,this,'En un momento difícil')">
+            <div class="ob-card-icon">🌧️</div>
+            <div class="ob-card-title">Momento difícil</div>
+            <div class="ob-card-sub">Necesito apoyo y esperanza</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Step 3: What they need -->
+    <div class="ob-screen" id="obs-3" style="display:none">
+      <div class="ob-step-wrap">
+        <div class="ob-pw"><div class="ob-pb" id="obp3" style="width:60%"></div></div>
+        <div class="ob-q">¿Qué quieres encontrar aquí?</div>
+        <div class="ob-qs">Ágape se adaptará a lo que más necesitas.</div>
+        <div class="ob-cards" id="ob-cards-3">
+          <div class="ob-card" onclick="obSelect(3,this,'Paz interior')">
+            <div class="ob-card-icon">✨</div>
+            <div class="ob-card-title">Paz interior</div>
+            <div class="ob-card-sub">Calmar mi mente y mi corazón</div>
+          </div>
+          <div class="ob-card" onclick="obSelect(3,this,'Entender la Biblia')">
+            <div class="ob-card-icon">📖</div>
+            <div class="ob-card-title">Entender la Biblia</div>
+            <div class="ob-card-sub">Leer y estudiar con profundidad</div>
+          </div>
+          <div class="ob-card" onclick="obSelect(3,this,'Fortalecer mi fe')">
+            <div class="ob-card-icon">🌱</div>
+            <div class="ob-card-title">Fortalecer mi fe</div>
+            <div class="ob-card-sub">Crecer espiritualmente cada día</div>
+          </div>
+          <div class="ob-card" onclick="obSelect(3,this,'Apoyo en algo difícil')">
+            <div class="ob-card-icon">🙏</div>
+            <div class="ob-card-title">Apoyo espiritual</div>
+            <div class="ob-card-sub">Encontrar fuerza en momentos duros</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Step 4: Experience level -->
+    <div class="ob-screen" id="obs-4" style="display:none">
+      <div class="ob-step-wrap">
+        <div class="ob-pw"><div class="ob-pb" id="obp4" style="width:80%"></div></div>
+        <div class="ob-q">¿Cuánto tiempo llevas en la fe?</div>
+        <div class="ob-qs">Esto me ayuda a acompañarte mejor.</div>
+        <div class="ob-cards" id="ob-cards-4">
+          <div class="ob-card" onclick="obSelect(4,this,'Estoy empezando')">
+            <div class="ob-card-icon">🌱</div>
+            <div class="ob-card-title">Estoy empezando</div>
+            <div class="ob-card-sub">Quiero conocer a Dios</div>
+          </div>
+          <div class="ob-card" onclick="obSelect(4,this,'Llevo algunos años')">
+            <div class="ob-card-icon">🌿</div>
+            <div class="ob-card-title">Llevo algunos años</div>
+            <div class="ob-card-sub">Tengo base, quiero profundizar</div>
+          </div>
+          <div class="ob-card" onclick="obSelect(4,this,'Llevo mucho tiempo')">
+            <div class="ob-card-icon">🌳</div>
+            <div class="ob-card-title">Llevo mucho tiempo</div>
+            <div class="ob-card-sub">Busco nuevas herramientas</div>
+          </div>
+          <div class="ob-card" onclick="obSelect(4,this,'Volviendo a la fe')">
+            <div class="ob-card-icon">🔄</div>
+            <div class="ob-card-title">Volviendo a la fe</div>
+            <div class="ob-card-sub">Me alejé y quiero regresar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Step 5: Ready -->
+    <div class="ob-screen" id="obs-5" style="display:none">
+      <div class="ob-welcome">
+        <div style="font-size:48px">🙏</div>
+        <div class="ob-welcome-title" id="ob-final-title">Todo listo</div>
+        <div class="ob-welcome-desc" id="ob-final-msg">Tu camino espiritual empieza hoy.</div>
+        <div class="ob-verse-card">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--text);line-height:1.6" id="ob-final-verse">"Lámpara es a mis pies tu palabra, y lumbrera a mi camino."</div>
+          <div style="font-size:11px;color:var(--gold);margin-top:8px">Salmo 119:105</div>
+        </div>
+        <button class="ob-cta" onclick="finOb()">Entrar a Ágape</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -2181,10 +2314,9 @@ if(uname||ld('email',null)){document.getElementById('splash').style.display='non
 // =============================================
 // 22. ONBOARDING - FIJO Y SIMPLE
 // =============================================
-var obH = [];
+var obAnswers = {};
 
 function startOb(){
-  obH = [];
   if(uname){document.getElementById('splash').style.display='none';launch();return;}
   var sp=document.getElementById('splash');
   sp.classList.add('out');
@@ -2192,114 +2324,102 @@ function startOb(){
     sp.style.display='none';
     var ob=document.getElementById('ob');
     if(ob) ob.classList.add('on');
-    // Show first message after a short delay
-    setTimeout(function(){
-      addObMsg('Hola. Bienvenido a Ágape, tu espacio de crecimiento espiritual. ¿Cómo te llamas?', false);
-    }, 400);
   }, 600);
 }
 
-function addObMsg(text, isU){
-  var ms=document.getElementById('obms');
-  if(!ms) return;
-  var d=document.createElement('div');
-  d.className='om '+(isU?'u':'a');
-  if(!isU) d.innerHTML='<div class="os">Ágape</div>';
-  var b=document.createElement('div');
-  b.className='ob';
-  b.textContent=text;
-  d.appendChild(b);
-  ms.appendChild(d);
-  ms.scrollTop=ms.scrollHeight;
-}
-
-function addObOptions(opts){
-  var ms=document.getElementById('obms');
-  if(!ms) return;
-  var d=document.createElement('div');
-  d.className='om a';
-  var r=document.createElement('div');
-  r.className='oo';
-  opts.forEach(function(o){
-    var btn=document.createElement('button');
-    btn.className='oob';
-    btn.textContent=o;
-    btn.onclick=function(){
-      document.querySelectorAll('.oob').forEach(function(b){b.style.pointerEvents='none';b.style.opacity='.4';});
-      addObMsg(o,true);
-      obH.push({role:'user',content:o});
-      setTimeout(function(){obResp();},400);
-    };
-    r.appendChild(btn);
-  });
-  d.appendChild(r);
-  ms.appendChild(d);
-  ms.scrollTop=ms.scrollHeight;
-}
-
-function obSend(){
-  var inp=document.getElementById('obin');
-  if(!inp) return;
-  var t=inp.value.trim();
-  if(!t) return;
-  inp.value='';
-  addObMsg(t,true);
-  obH.push({role:'user',content:t});
-  setTimeout(function(){obResp();},400);
-}
-
-function obResp(){
-  var step=obH.length;
-  var obpel=document.getElementById('obp');
-  if(obpel) obpel.style.width=Math.round((step/5)*100)+'%';
-
-  if(step===1){
-    var name=obH[0].content;
-    uname=name;uinit=name.slice(0,2).toUpperCase();
-    sv('name',uname);sv('init',uinit);
-    addObMsg('¡Hola, '+name+'! ¿Cómo te sientes espiritualmente en este momento?',false);
-    setTimeout(function(){
-      addObOptions(['Con paz','Un poco perdido','Buscando más','En un momento difícil']);
-    },300);
-  } else if(step===2){
-    addObMsg('¿Qué es lo que más necesitas ahora mismo?',false);
-    setTimeout(function(){
-      addObOptions(['Paz interior','Fortalecer mi fe','Entender la Biblia','Apoyo en algo difícil']);
-    },300);
-  } else if(step===3){
-    addObMsg('¿Con qué tradición cristiana te identificas?',false);
-    setTimeout(function(){
-      addObOptions(['Católico','Evangélico','No denominacional','Prefiero no decir']);
-    },300);
-  } else if(step===4){
-    addObMsg('¿Con qué frecuencia te gustaría usar Ágape?',false);
-    setTimeout(function(){
-      addObOptions(['Cada día','Varios días a la semana','Cuando lo necesite']);
-    },300);
-  } else {
-    var estado=obH[1]?obH[1].content:'';
-    var msgs={
-      'Con paz':'Qué regalo llegar desde un lugar de paz. Ágape está aquí para ayudarte a seguir creciendo.',
-      'Un poco perdido':'No estás solo en ese caminar. Aquí encontrarás dirección, paso a paso.',
-      'Buscando más':'Esa búsqueda ya es una oración. Aquí encontrarás herramientas para profundizar cada día.',
-      'En un momento difícil':'Dios te encuentra exactamente donde estás. Ágape está aquí para acompañarte.'
-    };
-    var msg=msgs[estado]||'Cada día es una nueva oportunidad para crecer. Ágape está aquí para acompañarte.';
-    addObMsg('¡Todo listo, '+uname+'! '+msg,false);
-    setTimeout(finOb,2500);
+function obNext(step) {
+  if(step === 0) {
+    // Welcome → Name
+    document.getElementById('obs-0').style.display='none';
+    document.getElementById('obs-1').style.display='flex';
+    setTimeout(function(){ var i=document.getElementById('obin');if(i)i.focus(); },200);
+  } else if(step === 1) {
+    // Name → State
+    var inp = document.getElementById('obin');
+    var name = inp ? inp.value.trim() : '';
+    if(!name){ if(inp){inp.style.borderColor='var(--gold)';inp.placeholder='Escribe tu nombre...';} return; }
+    uname = name; uinit = name.slice(0,2).toUpperCase();
+    sv('name', uname); sv('init', uinit);
+    obAnswers.name = name;
+    document.getElementById('obs-1').style.display='none';
+    document.getElementById('obs-2').style.display='flex';
   }
 }
 
-function finOb(){
-  var obpel=document.getElementById('obp');if(obpel)obpel.style.width='100%';
+function obSelect(step, card, value) {
+  // Mark selected
+  var cards = card.parentElement.querySelectorAll('.ob-card');
+  cards.forEach(function(c){ c.classList.remove('sel'); });
+  card.classList.add('sel');
+  obAnswers['step'+step] = value;
+  // Auto advance after brief delay
   setTimeout(function(){
-    var ob=document.getElementById('ob');if(ob)ob.classList.remove('on');
-    if(!ld('email',null)){var em=document.getElementById('em');if(em)em.classList.add('on');}
-    else{launch();}
-  },400);
+    if(step === 2) {
+      document.getElementById('obs-2').style.display='none';
+      document.getElementById('obs-3').style.display='flex';
+    } else if(step === 3) {
+      document.getElementById('obs-3').style.display='none';
+      document.getElementById('obs-4').style.display='flex';
+    } else if(step === 4) {
+      // Show final screen
+      document.getElementById('obs-4').style.display='none';
+      buildObFinal();
+      document.getElementById('obs-5').style.display='flex';
+    }
+  }, 350);
+}
+
+function buildObFinal() {
+  var name = obAnswers.name || uname || 'Bienvenido';
+  var estado = obAnswers.step2 || '';
+  var nivel = obAnswers.step4 || '';
+
+  var titles = {
+    'Con paz': '¡Hola, '+name+'!',
+    'Buscando más': name+', qué bueno tenerte aquí.',
+    'Un poco perdido': name+', no estás solo.',
+    'En un momento difícil': name+', Dios te encuentra aquí.'
+  };
+  var msgs = {
+    'Con paz': 'Ágape está aquí para ayudarte a seguir creciendo, un día a la vez.',
+    'Buscando más': 'La búsqueda ya es una oración. Aquí encontrarás herramientas para profundizar cada día.',
+    'Un poco perdido': 'Ágape te dará dirección, paso a paso, con la Palabra como guía.',
+    'En un momento difícil': 'Aquí encontrarás paz, esperanza y la presencia de Dios en cada paso.'
+  };
+  var verses = {
+    'Estoy empezando': {v:'"Venid a mí todos los que estéis trabajados y cargados, y yo os haré descansar."', r:'Mateo 11:28'},
+    'Llevo algunos años': {v:'"Arraigados y sobreedificados en él, y confirmados en la fe."', r:'Colosenses 2:7'},
+    'Llevo mucho tiempo': {v:'"Los que esperan en el Señor renovarán sus fuerzas."', r:'Isaías 40:31'},
+    'Volviendo a la fe': {v:'"Me buscaréis y me encontraréis, cuando me busquéis de todo vuestro corazón."', r:'Jeremías 29:13'}
+  };
+
+  var t = document.getElementById('ob-final-title');
+  var m = document.getElementById('ob-final-msg');
+  var ve = document.getElementById('ob-final-verse');
+
+  if(t) t.textContent = titles[estado] || ('¡Bienvenido, '+name+'!');
+  if(m) m.textContent = msgs[estado] || 'Tu camino espiritual empieza hoy.';
+
+  var v = verses[nivel] || {v:'"Lámpara es a mis pies tu palabra, y lumbrera a mi camino."', r:'Salmo 119:105'};
+  if(ve) ve.innerHTML = v.v + '<br><span style="font-size:11px;color:var(--gold);font-style:normal">' + v.r + '</span>';
+}
+
+function obSkip() {
+  // If they already have a name saved, launch directly
+  if(uname){ var ob=document.getElementById('ob');if(ob)ob.classList.remove('on');launch();return;}
+  // Otherwise go to name step
+  document.getElementById('obs-0').style.display='none';
+  document.getElementById('obs-1').style.display='flex';
+}
+
+function obSend(){
+  // Legacy support - not used in new flow
+  obNext(1);
 }
 
 function exName(){}
+
+
 
 // =============================================
 // 23. EMAIL
@@ -2856,7 +2976,7 @@ function delMV(ref){
 window.openPg=openPg;window.goHome=goHome;window.startOb=startOb;
 window.toggleTheme=toggleTheme;window.doneReto=doneReto;window.retoAbre=retoAbre;window.closeMo=closeMo;
 window.switchTab=switchTab;window.switchMV=switchMV;window.cSend=cSend;
-window.obSend=obSend;window.submitEmail=submitEmail;window.skipEmail=skipEmail;
+window.obSend=obSend;window.obNext=obNext;window.obSelect=obSelect;window.obSkip=obSkip;window.submitEmail=submitEmail;window.skipEmail=skipEmail;
 window.saveDiary=saveDiary;window.fPost=fPost;window.resetApp=resetApp;
 window.filterBks=filterBks;window.closeBible=closeBible;window.loadCh=loadCh;
 window.openBook=openBook;window.openVP=openVP;window.closeVP=closeVP;window.applyHL=applyHL;
