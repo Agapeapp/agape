@@ -316,6 +316,52 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .plan-intro{background:var(--bg2);border:0.5px solid var(--border);border-radius:14px;padding:16px;}
 .plan-intro-text{font-size:13px;color:var(--text2);line-height:1.75;}
 .plan-intro-footer{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--gold);text-align:center;margin-top:14px;padding-top:12px;border-top:0.5px solid var(--border);}
+/* Plan tabs */
+.plan-tabs{display:flex;gap:6px;padding:10px 0 4px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;flex-shrink:0;}
+.plan-tabs::-webkit-scrollbar{display:none;}
+.plan-tab{padding:7px 14px;border-radius:20px;border:0.5px solid var(--border2);background:var(--bg2);color:var(--text2);font-size:12px;font-family:'Inter',sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .2s;}
+.plan-tab.on{background:var(--gd);border-color:var(--gold);color:var(--gold);}
+#plan-content{display:flex;flex-direction:column;gap:12px;padding-bottom:20px;}
+/* Tracker circles */
+.plan-tracker{background:var(--bg2);border:0.5px solid var(--border);border-radius:14px;padding:14px;}
+.plan-tracker-title{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
+.plan-tracker-circles{display:flex;flex-wrap:wrap;gap:7px;}
+.plan-circle{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text3);cursor:pointer;transition:all .2s;flex-shrink:0;}
+.plan-circle.done{background:var(--gold);border-color:var(--gold);color:#0D0D0D;font-weight:600;}
+/* Plan escucha button */
+.plan-escucha-btn{width:28px;height:28px;border-radius:50%;background:var(--bg3);border:0.5px solid var(--border2);color:var(--text3);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .2s;}
+.plan-escucha-btn:active{background:var(--gd);border-color:var(--gold);color:var(--gold);}
+/* Calendar */
+.plan-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.plan-cal-hdr{text-align:center;font-size:10px;color:var(--text3);padding:4px 0;font-weight:500;}
+.plan-cal-cell{border:0.5px solid var(--border);border-radius:6px;padding:4px 3px;min-height:44px;cursor:pointer;transition:background .15s;display:flex;flex-direction:column;gap:2px;}
+.plan-cal-cell:active{background:var(--bg3);}
+.plan-cal-cell.done{background:rgba(212,168,83,.12);border-color:var(--gold);}
+.plan-cal-cell.reflex{background:var(--bg3);}
+.plan-cal-num{font-size:10px;color:var(--gold);font-weight:600;}
+.plan-cal-txt{font-size:8px;color:var(--text3);line-height:1.3;overflow:hidden;}
+.plan-cal-cell.done .plan-cal-num::after{content:' ✓';}
+/* Resúmenes */
+.plan-res-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px;}
+.plan-res-title{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--text);font-weight:400;}
+.plan-res-ref{font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;}
+.plan-res-body{font-size:13px;color:var(--text2);line-height:1.75;}
+.plan-res-clave{font-size:12px;color:var(--text3);border-left:2px solid var(--gold);padding-left:10px;margin-top:4px;line-height:1.6;}
+.plan-res-clave span{display:block;font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+/* Autores */
+.plan-autor-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;}
+.plan-autor-header{display:flex;align-items:center;gap:12px;}
+.plan-autor-av{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;flex-shrink:0;}
+.plan-autor-name{font-size:15px;color:var(--text);font-weight:500;}
+.plan-autor-rol{font-size:11px;color:var(--text3);margin-top:2px;}
+.plan-autor-bio{font-size:13px;color:var(--text2);line-height:1.7;}
+.plan-autor-salmos{font-size:12px;color:var(--text3);line-height:1.6;border-left:2px solid var(--border2);padding-left:10px;}
+.plan-autor-salmos span,.plan-autor-learn span{display:block;font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;}
+.plan-autor-learn{font-size:12px;color:var(--text2);line-height:1.6;border-left:2px solid var(--gold);padding-left:10px;}
+/* Info libro */
+.plan-info-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px;}
+.plan-info-label{font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;font-weight:500;}
+.plan-info-value{font-size:13px;color:var(--text2);line-height:1.7;}
 /* LOGROS */
 .lg{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .lgi{background:var(--bg2);border:0.5px solid var(--border);border-radius:14px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;position:relative;}
@@ -1280,67 +1326,159 @@ function renderEscuchas() {
 // PLAN DEL MES
 // =============================================
 var PLANES = {
-  6: { // Junio
+  6: {
     mes: 'Junio 2026',
     titulo: 'Encuentra tu voz ante Dios',
     tema: 'Cómo orar, llorar, alabar y confiar',
     libro: 'Libro de los Salmos',
-    intro: 'Los Salmos son el libro de oración de la Biblia. Durante este mes vamos a aprender a hablar con Dios con honestidad — en los momentos de alegría, de dolor, de duda y de gratitud. No hay emocion que Dios no pueda recibir.',
+    intro: 'Los Salmos son el libro de oración de la Biblia. Durante este mes aprenderemos a hablar con Dios con honestidad — en los momentos de alegría, de dolor, de duda y de gratitud. No hay emoción que Dios no pueda recibir.',
     footer: 'Hablar · Sentir · Confiar',
+    infoLibro: {
+      proposito: 'Ser el libro de oración y adoración del pueblo de Dios. Expresa todo el rango de emociones humanas ante Dios: alabanza, lamento, gratitud, duda, arrepentimiento y confianza.',
+      autor: 'Múltiples autores a lo largo de siglos: David (73 salmos), Asaf (12), los hijos de Coré (11), Salomón (2), Moisés (1) y otros anónimos.',
+      fecha: 'Entre el siglo XV y el siglo V a.C. El salterio se compiló en su forma final alrededor del siglo V-IV a.C.',
+      paraQuien: 'Para el pueblo de Israel como himno oficial del templo, y para todo creyente que necesite palabras para hablar con Dios en cualquier situación.',
+      historico: 'Los Salmos nacen en contextos muy distintos: el desierto, la guerra, el exilio en Babilonia, el regreso a la tierra. Cada salmo lleva la huella de una situación real y dolorosa o gozosa.',
+      cultural: 'La poesía hebrea no rima en sonido sino en ideas (paralelismo). Cada versículo repite, contrasta o amplía la idea anterior. Leer los Salmos requiere escuchar su ritmo interior.',
+      temas: 'Adoración y alabanza · Lamento y sufrimiento · Confianza en Dios · Arrepentimiento · Sabiduría · Esperanza mesiánica · Naturaleza como reflejo de Dios',
+      estructura: 'El libro está dividido en 5 secciones o "libros" (1-41 · 42-72 · 73-89 · 90-106 · 107-150), cada uno con su propio énfasis teológico.',
+      jesus: 'Jesús citó los Salmos más que cualquier otro libro. Salmo 22 describe su crucifixión. Salmo 110 habla de su sacerdocio eterno. Los Salmos son la oración que Jesús mismo oraba.'
+    },
+    autores: [
+      {
+        initials: 'DA', nombre: 'David', rol: 'Rey, pastor y poeta', bg: '#1A1200', col: '#D4A853',
+        bio: 'Pastor convertido en rey, guerrero y músico. Sus salmos muestran a un hombre que llora sin vergüenza, confiesa sus pecados sin excusas y alaba sin reservas. Fue llamado "un hombre conforme al corazón de Dios".',
+        salmos: 'Salmos 23, 51, 27, 34, 139, 22, 63, 103 y muchos más.',
+        aprendo: 'Que se puede ser auténtico delante de Dios. No hay emoción demasiado intensa ni demasiado oscura para llevarla en oración.'
+      },
+      {
+        initials: 'AS', nombre: 'Asaf', rol: 'Director del coro del templo', bg: '#0E2018', col: '#4DB88A',
+        bio: 'Músico y profeta que servía en el templo de Salomón. Sus salmos son los más teológicamente profundos, muchos de ellos escritos desde la confusión o la crisis de fe.',
+        salmos: 'Salmos 73-83. Especialmente conocido por el Salmo 73 sobre la envidia.',
+        aprendo: 'Que la duda honesta llevada a Dios puede convertirse en la fe más sólida. Asaf no fingía tener respuestas, pero tampoco dejaba de buscar a Dios.'
+      },
+      {
+        initials: 'MO', nombre: 'Moisés', rol: 'Profeta y legislador', bg: '#1A0A0E', col: '#E08080',
+        bio: 'El único salmo de Moisés en el libro (Salmo 90) fue escrito al final de sus 40 años en el desierto. Es una meditación sobre la eternidad de Dios frente a la fragilidad humana.',
+        salmos: 'Salmo 90 — el salmo más antiguo de toda la colección.',
+        aprendo: 'Que la brevedad de la vida no es una tragedia sino una invitación a vivir con sabiduría y propósito.'
+      },
+      {
+        initials: 'CO', nombre: 'Hijos de Coré', rol: 'Levitas, músicos del templo', bg: '#0D1E2A', col: '#5AABE0',
+        bio: 'Descendientes del Coré del desierto, que se rebelaron contra Moisés. Sus hijos eligieron un camino diferente: el servicio y la adoración. Sus salmos expresan un profundo amor por la presencia de Dios.',
+        salmos: 'Salmos 42, 44-49, 84-85, 87-88.',
+        aprendo: 'Que el legado familiar no determina tu destino. Se puede nacer de un traidor y convertirse en adorador.'
+      }
+    ],
     semanas: [
       {
-        titulo: 'Semana 1: Dios escucha',
+        titulo: 'Semana 1 · Dios escucha',
         dias: [
-          {n:1, titulo:'Introduccion a los Salmos', sub:'Quien los escribio, por que y como leerlos'},
-          {n:2, titulo:'Salmo 1', sub:'El camino del hombre bendecido'},
-          {n:3, titulo:'Salmo 8', sub:'La grandeza de Dios y la dignidad del hombre'},
-          {n:4, titulo:'Salmo 23', sub:'El Señor es mi pastor'},
-          {n:5, titulo:'Salmo 27', sub:'Una sola cosa le pido al Senor'},
-          {n:6, titulo:'Salmo 34', sub:'Busque al Señor y el me respondio'},
-          {n:7, titulo:'Dia de reflexion', sub:'Repasa la semana. Ora con tus propias palabras.'}
+          {n:1, titulo:'Introducción a los Salmos', sub:'Quién los escribió, por qué y cómo leerlos', reflexion:true,
+           resumen:'Antes de entrar al libro, entendemos su propósito: no es solo poesía, es oración real de personas reales. Los Salmos cubren 150 capítulos y 5 siglos de experiencia humana con Dios.',
+           clave:'Ábreme los ojos para que vea las maravillas de tu ley. — Salmo 119:18'},
+          {n:2, titulo:'Salmo 1', sub:'El camino del hombre bendecido', salmo:'Sal 1',
+           resumen:'El Salmo 1 es la puerta de entrada a todo el libro. Describe dos caminos: el del justo, que se deleita en la Palabra de Dios, y el del impío, que camina solo en su propia lógica.',
+           clave:'Sino que en la ley del Señor está su delicia, y en su ley medita de día y de noche. — Sal 1:2'},
+          {n:3, titulo:'Salmo 8', sub:'La grandeza de Dios y la dignidad del hombre', salmo:'Sal 8',
+           resumen:'David contempla el cielo de noche y se pregunta: ¿qué es el hombre para que Dios lo recuerde? Y la respuesta lo deja sin palabras: Dios lo coronó de gloria y lo puso sobre toda la creación.',
+           clave:'¿Qué es el hombre para que tengas de él memoria? — Sal 8:4'},
+          {n:4, titulo:'Salmo 23', sub:'El Señor es mi pastor', salmo:'Sal 23',
+           resumen:'El salmo más memorizado del mundo. David, que fue pastor antes de ser rey, describe a Dios como el Pastor perfecto: que da descanso, restaura el alma, acompaña en el valle oscuro y prepara mesa en presencia de los enemigos.',
+           clave:'Aunque ande en valle de sombra de muerte, no temeré mal alguno, porque tú estarás conmigo. — Sal 23:4'},
+          {n:5, titulo:'Salmo 27', sub:'Una sola cosa le pido al Señor', salmo:'Sal 27',
+           resumen:'Un salmo de confianza radical. David enfrenta enemigos reales pero su único deseo es morar en la casa del Señor. La segunda mitad muestra la lucha interior: el miedo real frente a la fe elegida.',
+           clave:'Una cosa he demandado al Señor, ésta buscaré: que esté yo en la casa del Señor todos los días de mi vida. — Sal 27:4'},
+          {n:6, titulo:'Salmo 34', sub:'Buscad al Señor y él me respondió', salmo:'Sal 34',
+           resumen:'David escribe este salmo después de fingir locura ante un rey enemigo para salvar su vida. El contexto es humillante, pero el salmo es pura alabanza. Enseña que Dios responde a los que claman y que el ángel del Señor acampa a nuestro alrededor.',
+           clave:'Los que miraron a él fueron alumbrados, y sus rostros no fueron avergonzados. — Sal 34:5'},
+          {n:7, titulo:'Día de reflexión', sub:'Repasa la semana. Ora con tus propias palabras.', reflexion:true,
+           resumen:'No hay lectura asignada hoy. Vuelve al salmo que más te habló esta semana. Léelo despacio. Escribe en tu diario qué te dijo Dios.'}
         ]
       },
       {
-        titulo: 'Semana 2: Cuando duele',
+        titulo: 'Semana 2 · Cuando duele',
         dias: [
-          {n:8, titulo:'Salmo 13', sub:'Hasta cuando, Señor?'},
-          {n:9, titulo:'Salmo 22', sub:'Dios mio, por que me has abandonado?'},
-          {n:10, titulo:'Salmo 42', sub:'Como el ciervo anhela las corrientes'},
-          {n:11, titulo:'Salmo 46', sub:'Dios es nuestro refugio y fortaleza'},
-          {n:12, titulo:'Salmo 51', sub:'La oración del arrepentimiento sincero'},
-          {n:13, titulo:'Salmo 62', sub:'Solo en Dios halla descanso mi alma'},
-          {n:14, titulo:'Dia de reflexion', sub:'Escribe tu propio salmo de lamento.'}
+          {n:8, titulo:'Salmo 13', sub:'¿Hasta cuándo, Señor?', salmo:'Sal 13',
+           resumen:'Solo 6 versículos, pero contienen una oración completa de lamento: el problema (Dios parece ausente), la petición (respóndeme), la confianza (confiaré en tu misericordia) y la alabanza (cantaré al Señor). Una estructura para orar cuando no sabes cómo empezar.',
+           clave:'Pero yo en tu misericordia he confiado; mi corazón se alegrará en tu salvación. — Sal 13:5'},
+          {n:9, titulo:'Salmo 22', sub:'¿Por qué me has abandonado?', salmo:'Sal 22',
+           resumen:'Este salmo fue citado por Jesús en la cruz. Comienza con la pregunta más oscura del ser humano ("¿Por qué me has abandonado?") y termina con alabanza universal. Jesús lo oró en su abandono total para que nosotros nunca estemos solos.',
+           clave:'Dios mío, Dios mío, ¿por qué me has desamparado? — Sal 22:1'},
+          {n:10, titulo:'Salmo 42', sub:'Como el ciervo anhela las corrientes', salmo:'Sal 42',
+           resumen:'El autor siente el silencio de Dios como una herida física. La imagen del ciervo que busca agua en el desierto es una de las más poderosas de toda la Biblia. Pero en medio del lamento aparece una orden a sí mismo: "Espera en Dios".',
+           clave:'¿Por qué te abates, oh alma mía, y te turbas dentro de mí? Espera en Dios. — Sal 42:11'},
+          {n:11, titulo:'Salmo 46', sub:'Dios es nuestro refugio y fortaleza', salmo:'Sal 46',
+           resumen:'Escrito posiblemente durante una invasión militar. La tierra se mueve, los montes se hunden en el mar — imagen de caos total — pero Dios es un río tranquilo en medio de todo. El verso más conocido: "Estad quietos y conoced que yo soy Dios".',
+           clave:'Estad quietos y conoced que yo soy Dios. — Sal 46:10'},
+          {n:12, titulo:'Salmo 51', sub:'La oración del arrepentimiento sincero', salmo:'Sal 51',
+           resumen:'David escribe este salmo después de su pecado con Betsabé y el asesinato de Urías. No busca excusas. Pide limpieza interior, no solo perdón exterior. El corazón contrito y humillado es lo único que Dios no rechaza.',
+           clave:'Crea en mí, oh Dios, un corazón limpio, y renueva un espíritu recto dentro de mí. — Sal 51:10'},
+          {n:13, titulo:'Salmo 62', sub:'Solo en Dios halla descanso mi alma', salmo:'Sal 62',
+           resumen:'Un salmo de calma en medio de la traición. David está rodeado de personas que fingen amistad pero planean hacerle daño. Pero él no busca venganza ni corre: simplemente espera en Dios. Repetido: "En Dios solamente reposa mi alma".',
+           clave:'En Dios solamente reposa mi alma; de él viene mi salvación. — Sal 62:1'},
+          {n:14, titulo:'Día de reflexión', sub:'Escribe tu propio salmo de lamento.', reflexion:true,
+           resumen:'¿Hay algo que te duele y no has podido decirle a Dios? Hoy es el día. Escríbelo. No tienen que ser palabras bonitas. El modelo de esta semana es: dile el problema, pídele que intervenga, confía en su misericordia, alábale aunque no veas todavía.'}
         ]
       },
       {
-        titulo: 'Semana 3: Confiar y obedecer',
+        titulo: 'Semana 3 · Confiar y obedecer',
         dias: [
-          {n:15, titulo:'Salmo 37', sub:'No te inquietes a causa de los malvados'},
-          {n:16, titulo:'Salmo 63', sub:'Mi alma tiene sed de ti'},
-          {n:17, titulo:'Salmo 84', sub:'Cuan hermosas son tus moradas'},
-          {n:18, titulo:'Salmo 91', sub:'El que habita al abrigo del Altisimo'},
-          {n:19, titulo:'Salmo 103', sub:'Bendice, alma mia, al Senor'},
-          {n:20, titulo:'Salmo 119:1-48', sub:'La Palabra como guia de vida'},
-          {n:21, titulo:'Dia de reflexion', sub:'Cual es el salmo que mas te ha hablado este mes?'}
+          {n:15, titulo:'Salmo 37', sub:'No te inquietes a causa de los malvados', salmo:'Sal 37',
+           resumen:'Un salmo de sabiduría largo y práctico. David repite el mismo mensaje de formas distintas: no envidies a los que parecen prosperar haciendo el mal. Su prosperidad es como la hierba que se seca. Confía en el Señor, haz el bien y habita en la tierra.',
+           clave:'Encomienda al Señor tu camino, y confía en él; y él hará. — Sal 37:5'},
+          {n:16, titulo:'Salmo 63', sub:'Mi alma tiene sed de ti', salmo:'Sal 63',
+           resumen:'Escrito en el desierto de Judá, probablemente cuando David huía de su hijo Absalón. Sin templo, sin altar, sin comunidad. Solo la sed. Y en esa sed descubre que la misericordia de Dios vale más que la vida.',
+           clave:'Porque mejor es tu misericordia que la vida; mis labios te alabarán. — Sal 63:3'},
+          {n:17, titulo:'Salmo 84', sub:'¡Cuán amables son tus moradas!', salmo:'Sal 84',
+           resumen:'Un salmo de los hijos de Coré, escrito por alguien que no puede ir al templo y lo extraña con toda el alma. Describe al gorrión que hace su nido junto al altar. Incluso el pájaro encuentra hogar en la presencia de Dios.',
+           clave:'Bienaventurados los que habitan en tu casa; perpetuamente te alabarán. — Sal 84:4'},
+          {n:18, titulo:'Salmo 91', sub:'El que habita al abrigo del Altísimo', salmo:'Sal 91',
+           resumen:'El gran salmo de protección. Describe a alguien que vive bajo la sombra de Dios como su morada habitual, no como recurso de emergencia. El diablo citó este salmo tentando a Jesús — Jesús lo rechazó porque la confianza en Dios no es magia sino relación.',
+           clave:'El que habita al abrigo del Altísimo morará bajo la sombra del Omnipotente. — Sal 91:1'},
+          {n:19, titulo:'Salmo 103', sub:'Bendice, alma mía, al Señor', salmo:'Sal 103',
+           resumen:'David se ordena a sí mismo no olvidarse de ninguno de los beneficios de Dios. Los enumera: perdona, sana, rescata, corona, satisface. Pero el centro del salmo es esto: Dios sabe que somos polvo, y aun así su amor es eterno.',
+           clave:'Como el padre se compadece de los hijos, se compadece el Señor de los que le temen. — Sal 103:13'},
+          {n:20, titulo:'Salmo 119:1-48', sub:'La Palabra como guía de vida', salmo:'Sal 119',
+           resumen:'El salmo más largo de la Biblia, con 176 versículos. Es un poema acróstico en hebreo. Hoy leemos los primeros 48 versículos. Cada versículo habla de la Palabra de Dios bajo diferentes nombres: ley, testimonio, mandamiento, estatuto. La tesis: la Palabra no es una carga sino un tesoro.',
+           clave:'¿Con qué limpiará el joven su camino? Con guardar tu palabra. — Sal 119:9'},
+          {n:21, titulo:'Día de reflexión', sub:'¿Cuál es el salmo que más te ha hablado?', reflexion:true,
+           resumen:'Vuelve a tu salmo favorito de las últimas tres semanas. Léelo con el método ESCUCHA completo. Dedica 15 minutos a esa lectura. ¿Qué te muestra de Jesús? ¿Qué cambio te pide Dios?'}
         ]
       },
       {
-        titulo: 'Semana 4: Alabanza pura',
+        titulo: 'Semana 4 · Alabanza pura',
         dias: [
-          {n:22, titulo:'Salmo 100', sub:'Aclamad al Señor toda la tierra'},
-          {n:23, titulo:'Salmo 121', sub:'Mi socorro viene del Senor'},
-          {n:24, titulo:'Salmo 130', sub:'Desde lo profundo clamo a ti'},
-          {n:25, titulo:'Salmo 139', sub:'Me conoces por completo'},
-          {n:26, titulo:'Salmo 145', sub:'Te exaltare, mi Dios y Rey'},
-          {n:27, titulo:'Salmo 150', sub:'Alabad al Señor — el gran final'},
-          {n:28, titulo:'Dia de reflexion', sub:'Escribe una oración de alabanza con lo que aprendiste.'}
+          {n:22, titulo:'Salmo 100', sub:'Aclamad al Señor toda la tierra', salmo:'Sal 100',
+           resumen:'Cinco versículos que contienen todo lo que necesitas saber sobre la adoración. Nos manda entrar con acción de gracias, reconocer que Él nos hizo, y saber que su misericordia es eterna. Es el salmo de la gratitud sin condiciones.',
+           clave:'Entrad por sus puertas con acción de gracias, por sus atrios con alabanza. — Sal 100:4'},
+          {n:23, titulo:'Salmo 121', sub:'Mi socorro viene del Señor', salmo:'Sal 121',
+           resumen:'Un salmo de peregrinación. El viajero levanta los ojos a los montes — de donde venían los peligros — y se pregunta de dónde vendrá su ayuda. La respuesta: no de los montes sino del Señor que los hizo. El Guardador de Israel no duerme.',
+           clave:'Mi socorro viene del Señor, que hizo los cielos y la tierra. — Sal 121:2'},
+          {n:24, titulo:'Salmo 130', sub:'Desde lo profundo clamo a ti', salmo:'Sal 130',
+           resumen:'De profundis — "desde lo profundo". Es una de las oraciones más hermosas de toda la Biblia. El orante está en el fondo, pero no está mirando el fondo: está mirando a Dios. Y espera a Dios más que los centinelas la mañana.',
+           clave:'Esperé al Señor, esperó mi alma; en su palabra he esperado. — Sal 130:5'},
+          {n:25, titulo:'Salmo 139', sub:'Me conoces por completo', salmo:'Sal 139',
+           resumen:'El salmo del conocimiento total. Dios conoce cada pensamiento antes de que sea formado, estuvo presente cuando éramos tejidos en el vientre, y sus pensamientos hacia nosotros son más que los granos de arena. No hay lugar donde escapar de su presencia — ni querrías hacerlo.',
+           clave:'Te alabaré, porque formidables y maravillosas son tus obras. — Sal 139:14'},
+          {n:26, titulo:'Salmo 145', sub:'Te exaltaré, mi Dios y Rey', salmo:'Sal 145',
+           resumen:'El último salmo acróstico de David. Es un himno de alabanza pura de principio a fin, sin lamento ni petición. Dios es grande, sus actos son maravillosos, su reino es eterno, y está cerca de todos los que le invocan de verdad.',
+           clave:'Cercano está el Señor a todos los que le invocan, a todos los que le invocan de veras. — Sal 145:18'},
+          {n:27, titulo:'Salmo 150', sub:'¡Alabad al Señor! — El gran final', salmo:'Sal 150',
+           resumen:'El último salmo es solo alabanza. No hay condiciones, no hay lamentos, no hay peticiones. Trompeta, arpa, danza, cuerdas, flauta, címbalos. Todo lo que respira alabe al Señor. Es la conclusión de 150 capítulos de conversación real con Dios.',
+           clave:'Todo lo que respira alabe al Señor. Aleluya. — Sal 150:6'},
+          {n:28, titulo:'Día de reflexión', sub:'Escribe una oración de alabanza', reflexion:true,
+           resumen:'Hoy no hay salmo nuevo. Escribe tu propia oración de alabanza usando lo que aprendiste este mes. ¿Qué característica de Dios te marcó más? ¿Cómo vas a adorarle con tu vida esta semana?'}
         ]
       },
       {
-        titulo: 'Semana 5: Cierre del mes',
+        titulo: 'Semana 5 · Cierre del mes',
         dias: [
-          {n:29, titulo:'Releer tu salmo favorito del mes', sub:'El que mas te marco. Subraya y ora.'},
-          {n:30, titulo:'Reflexion final de Salmos', sub:'Como ha cambiado tu oración este mes?'}
+          {n:29, titulo:'Salmo favorito del mes', sub:'El que más te marcó. Subraya y ora.', salmo:'Tu salmo',
+           resumen:'Elige el salmo que más te habló en junio. Léelo despacio una vez más. Subraya el versículo que se convirtió en tu oración personal. Escríbelo en algún lugar donde lo veas todos los días.',
+           clave:''},
+          {n:30, titulo:'Reflexión final de Salmos', sub:'¿Cómo ha cambiado tu oración este mes?', reflexion:true,
+           resumen:'Cierra el mes respondiendo estas preguntas en tu diario: ¿De qué manera ha cambiado tu forma de orar? ¿Qué salmo quieres seguir meditando? ¿Qué verdad de Dios llevas contigo al mes que viene?'}
         ]
       }
     ]
@@ -1354,45 +1492,106 @@ function initPlan() {
   var plan = PLANES[month] || PLANES[6];
   var body = document.getElementById('plan-body');
   if(!body) return;
+  body.innerHTML = '';
 
-  // Count completed days
+  // ── TABS ──
+  var tabBar = document.createElement('div');
+  tabBar.className = 'plan-tabs';
+  tabBar.innerHTML = [
+    ['inicio','Inicio'],
+    ['calendario','Calendario'],
+    ['resumenes','Salmos'],
+    ['personajes','Autores'],
+    ['info','El libro']
+  ].map(function(t,i){
+    return '<button class="plan-tab'+(i===0?' on':'')+'" onclick="planTab(\''+t[0]+'\',this)">'+t[1]+'</button>';
+  }).join('');
+  body.appendChild(tabBar);
+
+  // ── CONTENIDO ──
+  var content = document.createElement('div');
+  content.id = 'plan-content';
+  body.appendChild(content);
+
+  renderPlanTab('inicio', plan, month);
+}
+
+function planTab(id, btn) {
+  document.querySelectorAll('.plan-tab').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  var month = new Date().getMonth() + 1;
+  var plan = PLANES[month] || PLANES[6];
+  renderPlanTab(id, plan, month);
+}
+
+function renderPlanTab(id, plan, month) {
+  var content = document.getElementById('plan-content');
+  if(!content) return;
+  content.innerHTML = '';
+
+  if(id === 'inicio') renderPlanInicio(content, plan, month);
+  else if(id === 'calendario') renderPlanCalendario(content, plan, month);
+  else if(id === 'resumenes') renderPlanResumenes(content, plan);
+  else if(id === 'personajes') renderPlanPersonajes(content, plan);
+  else if(id === 'info') renderPlanInfo(content, plan);
+}
+
+// ── TAB 1: INICIO ──
+function renderPlanInicio(el, plan, month) {
   var key = 'plan_' + month;
   var done = planProgress[key] || {};
-  var totalDays = plan.semanas.reduce(function(t,s){return t+s.dias.length;}, 0);
+  var totalDays = plan.semanas.reduce(function(t,s){return t+s.dias.length;},0);
   var doneDays = Object.keys(done).filter(function(k){return done[k];}).length;
   var pct = Math.round(doneDays/totalDays*100);
 
-  var html = '';
-
   // Hero
-  html += '<div class="plan-hero">';
-  html += '<div class="plan-month">' + plan.mes + '</div>';
-  html += '<div class="plan-title">' + plan.titulo + '</div>';
-  html += '<div class="plan-tema">' + plan.tema + '</div>';
-  html += '<div class="plan-libro">' + plan.libro + '</div>';
-  html += '</div>';
+  var hero = document.createElement('div');
+  hero.className = 'plan-hero';
+  hero.innerHTML = '<div class="plan-month">'+plan.mes+'</div>'
+    +'<div class="plan-title">'+plan.titulo+'</div>'
+    +'<div class="plan-tema">'+plan.tema+'</div>'
+    +'<div class="plan-libro">'+plan.libro+'</div>';
+  el.appendChild(hero);
 
-  // Progress
-  html += '<div class="plan-progress">';
-  html += '<div class="plan-prog-top"><div class="plan-prog-title">Mi progreso</div><div class="plan-prog-num">' + doneDays + ' de ' + totalDays + ' dias</div></div>';
-  html += '<div class="plan-prog-bar"><div class="plan-prog-fill" style="width:' + pct + '%"></div></div>';
-  html += '</div>';
+  // Tracker de círculos
+  var tracker = document.createElement('div');
+  tracker.className = 'plan-tracker';
+  tracker.innerHTML = '<div class="plan-tracker-title">Tracker del mes</div><div class="plan-tracker-circles" id="plan-circles"></div>';
+  el.appendChild(tracker);
+  var circles = tracker.querySelector('#plan-circles');
+  for(var d=1; d<=totalDays; d++){
+    var isDone = !!done[d];
+    var c = document.createElement('div');
+    c.className = 'plan-circle' + (isDone?' done':'');
+    c.textContent = d;
+    c.setAttribute('data-day', d);
+    el.appendChild(c); // will be moved
+    circles.appendChild(c);
+  }
+
+  // Barra progreso
+  var prog = document.createElement('div');
+  prog.className = 'plan-progress';
+  prog.innerHTML = '<div class="plan-prog-top"><div class="plan-prog-title">Mi progreso</div>'
+    +'<div class="plan-prog-num" id="plan-prog-num">'+doneDays+' de '+totalDays+' días</div></div>'
+    +'<div class="plan-prog-bar"><div class="plan-prog-fill" id="plan-prog-fill" style="width:'+pct+'%"></div></div>'
+    +'<div style="font-size:11px;color:var(--text3);margin-top:8px;text-align:right">'+pct+'% completado</div>';
+  el.appendChild(prog);
 
   // Intro
-  html += '<div class="plan-intro">';
-  html += '<div class="plan-intro-text">' + plan.intro + '</div>';
-  html += '<div class="plan-intro-footer">' + plan.footer + '</div>';
-  html += '</div>';
+  var intro = document.createElement('div');
+  intro.className = 'plan-intro';
+  intro.innerHTML = '<div class="plan-intro-text">'+plan.intro+'</div>'
+    +'<div class="plan-intro-footer">'+plan.footer+'</div>';
+  el.appendChild(intro);
 
-  body.innerHTML = html;
-
-  // Render weeks with DOM
-  plan.semanas.forEach(function(semana, si) {
+  // Semanas
+  plan.semanas.forEach(function(semana) {
     var weekEl = document.createElement('div');
     weekEl.className = 'plan-week';
-
     var doneInWeek = semana.dias.filter(function(d){return done[d.n];}).length;
-    weekEl.innerHTML = '<div class="plan-week-hdr"><div class="plan-week-title">' + semana.titulo + '</div><div class="plan-week-days">' + doneInWeek + '/' + semana.dias.length + '</div></div>';
+    weekEl.innerHTML = '<div class="plan-week-hdr"><div class="plan-week-title">'+semana.titulo+'</div>'
+      +'<div class="plan-week-days" id="wk-cnt-'+semana.dias[0].n+'">'+doneInWeek+'/'+semana.dias.length+'</div></div>';
 
     semana.dias.forEach(function(dia) {
       var dayEl = document.createElement('div');
@@ -1400,54 +1599,216 @@ function initPlan() {
       var isDone = !!done[dia.n];
 
       var numEl = document.createElement('div');
-      numEl.className = 'plan-day-num' + (isDone ? ' done' : '');
-      numEl.innerHTML = isDone ? '<svg style="width:13px;height:13px;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>' : dia.n;
-      numEl.onclick = function() { togglePlanDay(month, dia.n, plan, numEl, weekEl, doneDays, totalDays); };
+      numEl.className = 'plan-day-num' + (isDone?' done':'');
+      numEl.setAttribute('data-daynum', dia.n);
+      numEl.innerHTML = isDone
+        ? '<svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>'
+        : dia.n;
+      numEl.onclick = (function(d){ return function(){ togglePlanDay(month, d.n, plan); }; })(dia);
 
+      var hasEscucha = dia.salmo && !dia.reflexion;
       var infoEl = document.createElement('div');
       infoEl.className = 'plan-day-info';
-      infoEl.innerHTML = '<div class="plan-day-title">' + dia.titulo + '</div><div class="plan-day-sub">' + dia.sub + '</div>';
+      infoEl.innerHTML = '<div class="plan-day-title">'+dia.titulo+'</div>'
+        +'<div class="plan-day-sub">'+dia.sub+'</div>';
 
       dayEl.appendChild(numEl);
       dayEl.appendChild(infoEl);
+
+      if(hasEscucha) {
+        var escBtn = document.createElement('button');
+        escBtn.className = 'plan-escucha-btn';
+        escBtn.innerHTML = '<svg style="width:12px;height:12px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7 M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
+        escBtn.title = 'Aplicar método ESCUCHA';
+        escBtn.onclick = (function(d){ return function(e){ e.stopPropagation(); openEscuchaPlan(d); }; })(dia);
+        dayEl.appendChild(escBtn);
+      }
+
       weekEl.appendChild(dayEl);
     });
-
-    body.appendChild(weekEl);
+    el.appendChild(weekEl);
   });
 }
 
-function togglePlanDay(month, dayNum, plan, numEl, weekEl, doneDays, totalDays) {
+function openEscuchaPlan(dia) {
+  // Pre-fill escucha with the psalm and open the escucha page
+  sv('escucha_plan_salmo', dia.titulo + ' — ' + dia.sub);
+  openPg('escucha');
+  toast('Aplicando ESCUCHA a: ' + dia.titulo);
+}
+
+// ── TAB 2: CALENDARIO ──
+function renderPlanCalendario(el, plan, month) {
+  var key = 'plan_' + month;
+  var done = planProgress[key] || {};
+
+  var header = document.createElement('div');
+  header.innerHTML = '<div style="font-family:\'Cormorant Garamond\',serif;font-size:22px;color:var(--gold);text-align:center;padding:16px 0 4px">'+plan.mes+'</div>'
+    +'<div style="font-size:12px;color:var(--text3);text-align:center;margin-bottom:14px">'+plan.tema+'</div>';
+  el.appendChild(header);
+
+  // Calendar grid
+  var cal = document.createElement('div');
+  cal.className = 'plan-cal';
+
+  // Day headers
+  ['L','M','X','J','V','S','D'].forEach(function(d){
+    var h = document.createElement('div');
+    h.className = 'plan-cal-hdr';
+    h.textContent = d;
+    cal.appendChild(h);
+  });
+
+  // June 2026 starts on Monday (day 1)
+  var allDays = [];
+  plan.semanas.forEach(function(s){ s.dias.forEach(function(d){ allDays.push(d); }); });
+
+  // June 1 2026 = Monday, so offset = 0
+  for(var i=0; i<allDays.length; i++){
+    var dia = allDays[i];
+    var isDone = !!done[dia.n];
+    var cell = document.createElement('div');
+    cell.className = 'plan-cal-cell' + (isDone?' done':'') + (dia.reflexion?' reflex':'');
+    cell.innerHTML = '<div class="plan-cal-num">'+dia.n+'</div>'
+      +'<div class="plan-cal-txt">'+(dia.salmo||'')+'</div>';
+    cell.onclick = (function(d){ return function(){ togglePlanDay(month, d.n, plan); }; })(dia);
+    cal.appendChild(cell);
+  }
+  el.appendChild(cal);
+
+  // Legend
+  var legend = document.createElement('div');
+  legend.innerHTML = '<div style="display:flex;gap:16px;justify-content:center;padding:12px 0;font-size:11px;color:var(--text3)">'
+    +'<div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:3px;background:var(--gold);opacity:.8"></div>Completado</div>'
+    +'<div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:3px;background:var(--bg3);border:0.5px solid var(--border2)"></div>Reflexión</div>'
+    +'</div>';
+  el.appendChild(legend);
+}
+
+// ── TAB 3: RESÚMENES ──
+function renderPlanResumenes(el, plan) {
+  var header = document.createElement('div');
+  header.innerHTML = '<div style="font-size:13px;color:var(--text2);line-height:1.7;padding:4px 0 12px">'
+    +'Un resumen de cada Salmo del plan para que llegues con contexto antes de leerlo.</div>';
+  el.appendChild(header);
+
+  var allDays = [];
+  plan.semanas.forEach(function(s){ s.dias.forEach(function(d){ allDays.push(d); }); });
+
+  allDays.forEach(function(dia) {
+    if(!dia.resumen) return;
+    var card = document.createElement('div');
+    card.className = 'plan-res-card';
+    card.innerHTML = '<div class="plan-res-title">'+dia.titulo+'</div>'
+      +'<div class="plan-res-ref">'+dia.sub+'</div>'
+      +'<div class="plan-res-body">'+dia.resumen+'</div>'
+      +(dia.clave ? '<div class="plan-res-clave"><span>Versículo clave</span> '+dia.clave+'</div>' : '');
+    el.appendChild(card);
+  });
+}
+
+// ── TAB 4: PERSONAJES / AUTORES ──
+function renderPlanPersonajes(el, plan) {
+  var header = document.createElement('div');
+  header.innerHTML = '<div style="font-size:13px;color:var(--text2);line-height:1.7;padding:4px 0 12px">'
+    +'Los principales autores y figuras de los Salmos.</div>';
+  el.appendChild(header);
+
+  (plan.autores || []).forEach(function(a) {
+    var card = document.createElement('div');
+    card.className = 'plan-autor-card';
+    card.innerHTML = '<div class="plan-autor-header">'
+      +'<div class="plan-autor-av" style="background:'+a.bg+';color:'+a.col+'">'+a.initials+'</div>'
+      +'<div><div class="plan-autor-name">'+a.nombre+'</div><div class="plan-autor-rol">'+a.rol+'</div></div>'
+      +'</div>'
+      +'<div class="plan-autor-bio">'+a.bio+'</div>'
+      +'<div class="plan-autor-salmos"><span>Salmos que escribió:</span> '+a.salmos+'</div>'
+      +'<div class="plan-autor-learn"><span>Qué nos enseña:</span> '+a.aprendo+'</div>';
+    el.appendChild(card);
+  });
+}
+
+// ── TAB 5: INFO DEL LIBRO ──
+function renderPlanInfo(el, plan) {
+  var info = plan.infoLibro || {};
+  var sections = [
+    {label:'Propósito del libro', value: info.proposito},
+    {label:'Autor / Autores', value: info.autor},
+    {label:'Fecha aproximada', value: info.fecha},
+    {label:'Para quién fue escrito', value: info.paraQuien},
+    {label:'Contexto histórico', value: info.historico},
+    {label:'Contexto cultural', value: info.cultural},
+    {label:'Temas principales', value: info.temas},
+    {label:'Estructura del libro', value: info.estructura},
+    {label:'Cómo se conecta con Jesús', value: info.jesus}
+  ];
+
+  var header = document.createElement('div');
+  header.innerHTML = '<div style="font-family:\'Cormorant Garamond\',serif;font-size:22px;color:var(--gold);text-align:center;padding:12px 0 4px">Libro de los Salmos</div>'
+    +'<div style="font-size:12px;color:var(--text3);text-align:center;margin-bottom:14px">Nuevo / Antiguo Testamento · Poético</div>';
+  el.appendChild(header);
+
+  sections.forEach(function(s) {
+    if(!s.value) return;
+    var card = document.createElement('div');
+    card.className = 'plan-info-card';
+    card.innerHTML = '<div class="plan-info-label">'+s.label+'</div>'
+      +'<div class="plan-info-value">'+s.value+'</div>';
+    el.appendChild(card);
+  });
+}
+
+function togglePlanDay(month, dayNum, plan) {
   var key = 'plan_' + month;
   if(!planProgress[key]) planProgress[key] = {};
   var wasDone = !!planProgress[key][dayNum];
   planProgress[key][dayNum] = !wasDone;
   sv('plan_progress', planProgress);
 
-  if(!wasDone) {
-    numEl.className = 'plan-day-num done';
-    numEl.innerHTML = '<svg style="width:13px;height:13px;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
-    xp += 10; sv('xp', xp); updXP();
-    toast('+10 XP - Dia completado!');
-  } else {
-    numEl.className = 'plan-day-num';
-    numEl.textContent = dayNum;
-  }
+  // Update circle in tracker
+  var circles = document.querySelectorAll('#plan-circles .plan-circle');
+  circles.forEach(function(c){
+    if(parseInt(c.getAttribute('data-day'))===dayNum){
+      c.classList.toggle('done', !wasDone);
+    }
+  });
 
-  // Update week counter
+  // Update day number button
+  var nums = document.querySelectorAll('[data-daynum="'+dayNum+'"]');
+  nums.forEach(function(numEl){
+    if(!wasDone){
+      numEl.className = 'plan-day-num done';
+      numEl.innerHTML = '<svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+    } else {
+      numEl.className = 'plan-day-num';
+      numEl.textContent = dayNum;
+    }
+  });
+
+  // Update calendar cell
+  var cells = document.querySelectorAll('.plan-cal-cell');
+  // (no direct reference; calendar re-renders on tab open)
+
+  // Update progress
+  var totalDays = plan.semanas.reduce(function(t,s){return t+s.dias.length;},0);
   var done = planProgress[key] || {};
-  var allDays = Array.from(weekEl.querySelectorAll('.plan-day-num'));
-  var doneInWeek = allDays.filter(function(el){return el.classList.contains('done');}).length;
-  weekEl.querySelector('.plan-week-days').textContent = doneInWeek + '/' + allDays.length;
-
-  // Update progress bar
   var totalDone = Object.keys(done).filter(function(k){return done[k];}).length;
   var pct = Math.round(totalDone/totalDays*100);
-  var bar = document.querySelector('.plan-prog-fill');
-  var num = document.querySelector('.plan-prog-num');
-  if(bar) bar.style.width = pct + '%';
-  if(num) num.textContent = totalDone + ' de ' + totalDays + ' dias';
+  var bar = document.getElementById('plan-prog-fill');
+  var num = document.getElementById('plan-prog-num');
+  if(bar) bar.style.width = pct+'%';
+  if(num) num.textContent = totalDone+' de '+totalDays+' días';
+
+  if(!wasDone){
+    xp += 10; sv('xp',xp); updXP();
+    toast('+10 XP — Día completado!');
+  }
 }
+
+window.planTab = planTab;
+window.openEscuchaPlan = openEscuchaPlan;
+
+
 
 // =============================================
 // 27. ARRANQUE FINAL
