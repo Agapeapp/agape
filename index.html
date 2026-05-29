@@ -1614,6 +1614,77 @@ function toast(msg){var t=document.getElementById('tst');if(!t){t=document.creat
 function resetApp(){if(confirm('Seguro? Esto borrara tu perfil.')){['name','init','xp','streak','totrt','rtdone','lmode','diary','frases','logros','lo','email','vdata','escuchas','plan_progress'].forEach(function(k){localStorage.removeItem('ag_'+k);});location.reload();}}
 
 // =============================================
+// CHAT IA ESPIRITUAL
+// =============================================
+var chatH=[];
+async function cSend(){
+  var inp=document.getElementById('ci');if(!inp)return;
+  var txt=inp.value.trim();if(!txt)return;
+  inp.value='';inp.style.height='';
+  var cms=document.getElementById('cms');if(!cms)return;
+  // Add user message
+  var um=document.createElement('div');um.className='mg u';
+  um.innerHTML='<div class="mb">'+txt.replace(/</g,'&lt;')+'</div>';
+  cms.appendChild(um);cms.scrollTop=cms.scrollHeight;
+  chatH.push({role:'user',content:txt});
+  // Typing indicator
+  var ty=document.createElement('div');ty.className='mg a';
+  ty.innerHTML='<div class="mn">Ágape IA</div><div class="mb ty"><span></span><span></span><span></span></div>';
+  cms.appendChild(ty);cms.scrollTop=cms.scrollHeight;
+  try{
+    var sys='Eres Ágape IA, un acompañante espiritual cristiano cálido y sabio. Respondes con brevedad, amor y verdad bíblica. Citas versículos cuando ayuda. Usas un tono cercano, nunca frío ni predicador. Respondes siempre en español.';
+    var reply=await ai(chatH.slice(-10),sys,400);
+    ty.remove();
+    chatH.push({role:'assistant',content:reply});
+    var am=document.createElement('div');am.className='mg a';
+    am.innerHTML='<div class="mn">Ágape IA</div><div class="mb">'+reply.replace(/\n/g,'<br>').replace(/</g,'&lt;').replace(/&lt;br>/g,'<br>')+'</div>';
+    cms.appendChild(am);cms.scrollTop=cms.scrollHeight;
+  }catch(e){
+    ty.remove();
+    var em=document.createElement('div');em.className='mg a';
+    em.innerHTML='<div class="mn">Ágape IA</div><div class="mb">Lo siento, no pude conectar ahora. Inténtalo de nuevo.</div>';
+    cms.appendChild(em);cms.scrollTop=cms.scrollHeight;
+  }
+}
+
+// =============================================
+// FORO / COMUNIDAD
+// =============================================
+function fPost(){
+  var inp=document.getElementById('fpi');if(!inp)return;
+  var txt=inp.value.trim();if(!txt)return;
+  inp.value='';
+  var fpl=document.getElementById('fpl');if(!fpl)return;
+  var now2=new Date();
+  var div=document.createElement('div');div.className='po';
+  div.innerHTML='<div class="poh"><div class="av" style="background:#2A2000;color:#D4A853">'+uinit+'</div><div><div class="pou">'+(uname||'Tú')+'</div><div class="pom">ahora</div></div></div><div class="pob">'+txt.replace(/</g,'&lt;')+'</div><div class="pof"><button class="pb2">❤ 0</button></div>';
+  fpl.insertBefore(div,fpl.firstChild);
+  toast('Publicado en la comunidad');
+  if(!rtdone.has('share'))doneReto('share','Comparte en la comunidad',20,'comunidad');
+}
+
+// =============================================
+// TIMERS (ORACIÓN)
+// =============================================
+var timers={};
+function startT(id,secs){
+  if(timers[id])return;
+  var el=document.getElementById(id);if(!el)return;
+  var rem=secs;
+  el.textContent=fmt(rem);
+  timers[id]=setInterval(function(){
+    rem--;
+    if(rem<=0){clearInterval(timers[id]);delete timers[id];el.textContent='✓ Listo';return;}
+    el.textContent=fmt(rem);
+  },1000);
+}
+function resetT(id,label){
+  if(timers[id]){clearInterval(timers[id]);delete timers[id];}
+  var el=document.getElementById(id);if(el)el.textContent=label;
+}
+function fmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60;}
+
+// =============================================
 // MÓDULO BIBLIA
 // =============================================
 var curBook=null,curChap=1,curVerse=null,curRef=null;
