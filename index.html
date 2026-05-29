@@ -700,6 +700,45 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
   <div class="sb" style="padding-top:6px" id="plan-body"></div>
 </div>
 
+<!-- DIARIO (placeholder) -->
+<div class="pg" id="pg-diario" style="display:none"></div>
+
+<!-- PLANES (placeholder) -->
+<div class="pg" id="pg-planes" style="display:none"></div>
+
+<!-- FORO -->
+<div class="pg" id="pg-foro">
+  <div class="sh"><div class="br"><button class="bb" onclick="goHome()"><svg style="width:1em;height:1em;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5 M12 19l-7-7 7-7"/></svg></button><span class="bl">Inicio</span></div><div class="st">Comunidad</div></div>
+  <div class="sb">
+    <div class="np"><div class="npr"><div class="av" id="favav" style="background:#2A2000;color:#D4A853;width:32px;height:32px;font-size:11px">Tu</div><textarea class="npi" id="fpi" placeholder="Comparte una reflexión, versículo o testimonio..."></textarea></div><div style="display:flex;justify-content:flex-end"><button class="npb" onclick="fPost()">Publicar</button></div></div>
+    <div id="fpl">
+      <div class="po" style="margin-bottom:10px"><div class="poh"><div class="av" style="background:#1A1530;color:#9B8FD4">MG</div><div><div class="pou">María G.</div><div class="pom">hace 2h</div></div></div><div class="pob">Hoy Filipenses 4 me habló directo al corazón.</div><div class="pof"><button class="pb2"><svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 14</button><button class="pb2"><svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 3</button></div></div>
+      <div class="po"><div class="poh"><div class="av" style="background:#0E2018;color:#4DB88A">AL</div><div><div class="pou">Ana L.</div><div class="pom">hace 5h</div></div></div><div class="pob">¡Dios es bueno! Mi mamá salió bien de su operación.</div><div class="pof"><button class="pb2"><svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 31</button><button class="pb2"><svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 7</button></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAT -->
+<div class="pg" id="pg-chat">
+  <div class="sh" style="padding-bottom:6px"><div class="br"><button class="bb" onclick="goHome()"><svg style="width:1em;height:1em;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5 M12 19l-7-7 7-7"/></svg></button><span class="bl">Inicio</span></div><div class="st">Chat espiritual</div></div>
+  <div class="cw">
+    <div class="cm" id="cms"><div class="mg a"><div class="mn">Ágape IA</div><div class="mb" id="cwel">Hola. Estoy aquí para acompañarte. Puedes preguntarme sobre la Biblia, pedir orientación, o compartir cómo te sientes hoy.</div></div></div>
+    <div class="cf"><textarea class="ci" id="ci" placeholder="Escribe tu mensaje..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();cSend()}"></textarea><button class="csn" onclick="cSend()"><svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"><path d="M22 2L11 13 M22 2L15 22 11 13 2 9z"/></svg></button></div>
+  </div>
+</div>
+
+<!-- PERFIL -->
+<div class="pg" id="pg-perfil">
+  <div class="sh"><div class="br"><button class="bb" onclick="goHome()"><svg style="width:1em;height:1em;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5 M12 19l-7-7 7-7"/></svg></button><span class="bl">Inicio</span></div><div class="st">Mi perfil</div></div>
+  <div class="sb">
+    <div class="ph"><div class="pav" id="pav">Tu</div><div class="pnm" id="pnm">Bienvenido</div><div class="plv" id="plv">Nivel 1 · Semilla</div><div class="pxb"><div class="pxf" id="pxf" style="width:0%"></div></div></div>
+    <div class="pst"><div class="ps2"><div class="psn" id="psxp">0</div><div class="psl">XP total</div></div><div class="ps2"><div class="psn" id="psst">0</div><div class="psl">Racha días</div></div><div class="ps2"><div class="psn" id="psrt">0</div><div class="psl">Retos</div></div></div>
+    <div class="lbl">Ajustes</div>
+    <div class="ptg"><div><div class="ptl">Modo claro</div><div class="pts">Cambiar apariencia</div></div><div class="tsw" id="tsw" onclick="toggleTheme()"></div></div>
+    <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:13px 16px;cursor:pointer" onclick="resetApp()"><div style="font-size:13px;color:#E08080">Reiniciar onboarding</div><div style="font-size:11px;color:var(--text3);margin-top:2px">Borra tu perfil y empieza de nuevo</div></div>
+  </div>
+</div>
+
 <!-- NAV -->
 <div class="nav">
   <button class="nb on" id="nb-home" onclick="goHome()"><svg style="width:1em;height:1em;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z M9 22V12h6v10"/></svg>Inicio</button>
