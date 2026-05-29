@@ -91,7 +91,6 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .itx{font-size:13px;color:var(--text2);line-height:1.65;font-style:italic;}
 /* VERSE */
 .vc{background:var(--bg2);border:0.5px solid var(--border2);border-radius:16px;padding:16px;position:relative;overflow:hidden;}
-/* Devocional del día */
 .dvc{background:linear-gradient(135deg,#1A1200,#1C1500);border:0.5px solid var(--gold);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px;}
 .dvc-hdr{display:flex;justify-content:space-between;align-items:center;}
 .dvc-label{font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.15em;font-weight:500;}
@@ -530,7 +529,7 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
     <div class="dvc">
       <div class="dvc-hdr">
         <div class="dvc-label">Devocional del día</div>
-        <button class="dvc-refresh" onclick="loadDevocional(true)" title="Nuevo devocional"><svg style="width:12px;height:12px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6 M1 20v-6h6 M3.51 9a9 9 0 0 1 14.85-3.36L23 10 M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Renovar</button>
+        <button class="dvc-refresh" onclick="loadDevocional(true)"><svg style="width:12px;height:12px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6 M1 20v-6h6 M3.51 9a9 9 0 0 1 14.85-3.36L23 10 M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Renovar</button>
       </div>
       <div class="dvc-verse" id="hvv"></div>
       <div class="dvc-ref" id="hvr"></div>
@@ -541,7 +540,7 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
       <div class="dvc-question" id="dvc-question"><div class="dvc-loading"><span></span><span></span><span></span></div></div>
       <div class="dvc-actions">
         <button class="dvc-btn" onclick="shareVerse()"><svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8 M16 6l-4-4-4 4 M12 2v13"/></svg> Compartir</button>
-        <button class="dvc-btn" onclick="openPg('escucha')"><svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7 M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> ESCUCHA</button>
+        <button class="dvc-btn" onclick="openPg(&quot;escucha&quot;)"><svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7 M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> ESCUCHA</button>
       </div>
     </div>
     <div class="rm"><div class="rmt"><div class="rmtl">Retos de hoy</div><div class="rml" onclick="openPg('retos')">Ver todos →</div></div><div class="rbw"><div class="rbi" id="rmb" style="width:0%"></div></div><div class="rds"><div class="rd" id="rd0"><svg style="width:13px;height:13px;flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></i></div><div class="rd" id="rd1"><svg style="width:13px;height:13px;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V6a1 1 0 0 1 2 0v5 M11 5V4a1 1 0 0 1 2 0v7 M7 9.5V9a1 1 0 0 1 2 0v2 M13 4a1 1 0 0 1 2 0v8 M7 13c0 3 1 5 5 5s5-3.134 5-5V9"/></svg></div><div class="rd" id="rd2"><svg style="width:13px;height:13px;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20 M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="rd" id="rd3"><svg style="width:13px;height:13px;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div><div class="rd" id="rd4"><svg style="width:13px;height:13px;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2 M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0 M23 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75"/></svg></div></div></div>
@@ -605,7 +604,7 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
   <div class="sh"><div class="br"><button class="bb" id="bib-back-btn" onclick="bibliaGoBack()"><svg style="width:1em;height:1em;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5 M12 19l-7-7 7-7"/></svg></button><span class="bl" id="bib-back-label">Inicio</span></div><div style="display:flex;justify-content:space-between;align-items:center"><div><div class="st">Biblia</div><div class="ss">Lee la Palabra de Dios</div></div><button onclick="openPg('misv')" style="display:flex;align-items:center;gap:5px;background:var(--gd);border:0.5px solid var(--gold);border-radius:20px;padding:6px 12px;font-size:11px;color:var(--gold);font-family:'Inter',sans-serif;cursor:pointer"><svg style="width:13px;height:13px;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Mis versículos</button></div></div>
   <div class="bss"><svg style="width:1em;height:1em;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21l-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0"/></svg><input id="bsi" placeholder="Buscar libro..." oninput="filterBks()"/></div>
   <div class="bscr" id="blist"><div class="lbl">Antiguo Testamento</div><div class="bgr" id="otg"></div><div class="lbl" style="margin-top:8px">Nuevo Testamento</div><div class="bgr" id="ntg"></div></div>
-  <div class="rdr" id="rdr"><div class="rdh"><button class="bb" onclick="closeBible()"><svg style="width:1em;height:1em;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5 M12 19l-7-7 7-7"/></svg></button><div class="rdt" id="rdtl" style="flex:1"></div><button id="rdr-plan-btn" onclick="bibliaGoBack()" style="display:none;align-items:center;gap:5px;background:var(--gd);border:0.5px solid var(--gold);border-radius:20px;padding:6px 12px;font-size:11px;color:var(--gold);font-family:'Inter',sans-serif;cursor:pointer;flex-shrink:0"><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Volver al estudio</button></div><div class="rdb"><div class="chs" id="chs"></div><div id="vout"></div></div></div>
+  <div class="rdr" id="rdr"><div class="rdh"><button class="bb" onclick="closeBible()"><svg style="width:1em;height:1em;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5 M12 19l-7-7 7-7"/></svg></button><div class="rdt" id="rdtl" style="flex:1"></div><button id="rdr-plan-btn" onclick="bibliaGoBack()" style="display:none;align-items:center;gap:5px;background:var(--gd);border:0.5px solid var(--gold);border-radius:20px;padding:6px 12px;font-size:11px;color:var(--gold);font-family:'Inter',sans-serif;cursor:pointer;flex-shrink:0"><svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Volver al plan</button></div><div class="rdb"><div class="chs" id="chs"></div><div id="vout"></div></div></div>
 </div>
 
 <!-- MIS VERSICULOS -->
@@ -1080,36 +1079,29 @@ async function loadDevocional(force) {
   var savedQ = ld('dvc_q_' + today, null);
   var refEl = document.getElementById('dvc-ref-txt');
   var qEl = document.getElementById('dvc-question');
-
   if(savedRef && savedQ && !force) {
     if(refEl) refEl.textContent = savedRef;
     if(qEl) qEl.textContent = savedQ;
     return;
   }
-
   var verse = document.getElementById('hvv') ? document.getElementById('hvv').textContent : '';
   var ref = document.getElementById('hvr') ? document.getElementById('hvr').textContent : '';
-
   var loading = '<div class="dvc-loading"><span></span><span></span><span></span></div>';
   if(refEl) refEl.innerHTML = loading;
   if(qEl) qEl.innerHTML = loading;
-
   if(force) { sv('dvc_ref_' + today, null); sv('dvc_q_' + today, null); }
-
   try {
-    var prompt = 'Versiculo del dia: ' + verse + ' (' + ref + '). Responde SOLO con JSON valido sin markdown: {"reflexion":"2-3 frases calidas sobre el versiculo para empezar el dia","pregunta":"Una pregunta concreta para aplicar el versiculo hoy"}. Sin introduccion, solo el JSON.';
-
+    var prompt = 'Versiculo: ' + verse + ' (' + ref + '). Responde SOLO con JSON: {"reflexion":"2-3 frases calidas sobre este versiculo para empezar el dia","pregunta":"Una pregunta practica para aplicarlo hoy"}. Solo JSON, sin markdown.';
     var resp = await ai([{role:'user', content: prompt}], null, 300);
     var clean = resp.replace(/```json|```/g,'').trim();
     var data = JSON.parse(clean);
-
     if(refEl) refEl.textContent = data.reflexion;
     if(qEl) qEl.textContent = data.pregunta;
     sv('dvc_ref_' + today, data.reflexion);
     sv('dvc_q_' + today, data.pregunta);
   } catch(e) {
-    if(refEl) refEl.textContent = 'Que este versículo sea tu ancla hoy. Léelo despacio, una vez más, y deja que Dios te hable.';
-    if(qEl) qEl.textContent = '¿En qué área de tu vida necesitas aplicar esta verdad hoy?';
+    if(refEl) refEl.textContent = 'Que este versiculo sea tu ancla hoy. Leelo despacio y deja que Dios te hable.';
+    if(qEl) qEl.textContent = 'En que area de tu vida necesitas aplicar esta verdad hoy?';
   }
 }
 async function loadInt(){ await loadDevocional(false); }
@@ -1724,10 +1716,10 @@ function openSalmoPlan(dia) {
   _bibliaFromPlan = true;
   openPg('biblia');
   var lbl = document.getElementById('bib-back-label');
-  if(lbl) lbl.textContent = 'Estudio del mes';
+  if(lbl) lbl.textContent = 'Plan';
   setTimeout(function(){
     openBook('Salmos');
-    // Show the "Volver al estudio" button in the reader header
+    // Show the "Volver al plan" button in the reader header
     var planBtn = document.getElementById('rdr-plan-btn');
     if(planBtn) planBtn.style.display = 'flex';
     setTimeout(function(){
