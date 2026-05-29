@@ -156,6 +156,34 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .td{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;}
 .tb{padding:7px 16px;border-radius:20px;border:0.5px solid var(--border2);background:none;font-size:12px;font-family:'Inter',sans-serif;cursor:pointer;color:var(--text3);}
 .tb.go{border-color:var(--gold);color:var(--gold);}
+/* Oración mejorada */
+.or-step{border-radius:16px;overflow:hidden;border:0.5px solid var(--border);transition:border-color .2s;}
+.or-step.active{border-color:var(--gold);}
+.or-step-hdr{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;background:var(--bg2);}
+.or-step-num{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text3);flex-shrink:0;font-family:'Cormorant Garamond',serif;font-size:15px;transition:all .2s;}
+.or-step.active .or-step-num{background:var(--gold);border-color:var(--gold);color:#0D0D0D;font-weight:700;}
+.or-step.done .or-step-num{background:rgba(212,168,83,.2);border-color:var(--gold);color:var(--gold);}
+.or-step-info{flex:1;}
+.or-step-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;}
+.or-step.active .or-step-label{color:var(--gold);}
+.or-step-title{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--text);}
+.or-step-body{padding:0 16px 16px;background:var(--bg2);display:flex;flex-direction:column;gap:12px;}
+.or-step-desc{font-size:13px;color:var(--text2);line-height:1.75;}
+.or-verse{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--text3);border-left:2px solid var(--gold);padding-left:10px;line-height:1.6;}
+.or-ai-box{background:var(--bg3);border:0.5px solid var(--border);border-radius:12px;padding:14px;font-size:13px;color:var(--text2);line-height:1.75;min-height:48px;}
+.or-ta{width:100%;border:0.5px solid var(--border2);border-radius:12px;padding:12px;font-size:13px;font-family:'Inter',sans-serif;background:var(--bg3);color:var(--text);outline:none;resize:none;min-height:80px;line-height:1.6;box-sizing:border-box;}
+.or-ta:focus{border-color:var(--gold);}
+.or-actions{display:flex;gap:8px;}
+.or-btn{flex:1;padding:10px;border-radius:20px;border:0.5px solid var(--border2);background:none;color:var(--text2);font-size:12px;font-family:'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;}
+.or-btn.gold{border-color:var(--gold);color:var(--gold);background:var(--gd);}
+.or-btn:active{background:var(--bg3);}
+.or-progress{display:flex;gap:4px;padding:4px 0 8px;}
+.or-prog-dot{flex:1;height:3px;border-radius:2px;background:var(--border);transition:background .3s;}
+.or-prog-dot.done{background:rgba(212,168,83,.5);}
+.or-prog-dot.active{background:var(--gold);}
+.or-complete{background:linear-gradient(135deg,#1A1200,#0D0D0D);border:0.5px solid var(--gold);border-radius:18px;padding:28px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;}
+.or-complete-title{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gold);}
+.or-complete-sub{font-size:13px;color:var(--text2);line-height:1.7;}
 /* READINGS */
 .rc{background:var(--bg2);border:0.5px solid var(--border);border-radius:14px;padding:14px;}
 .rch{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
@@ -592,15 +620,11 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 
 <!-- ORACION -->
 <div class="pg" id="pg-oracion">
-  <div class="sh"><div class="br"><button class="bb" onclick="goHome()"><svg style="width:1em;height:1em;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5 M12 19l-7-7 7-7"/></svg></button><span class="bl">Inicio</span></div><div class="st">Oración diaria</div></div>
-  <div class="sb">
-    <div class="ps"><div class="pn">Paso 1 · Silencio</div><div class="pt">Prepara tu corazón</div><div class="px">Cierra los ojos. Respira profundo. Reconoce la presencia de Dios contigo ahora.</div><div class="tr"><div class="td" id="t1">2:00</div><div style="display:flex;gap:6px"><button class="tb go" onclick="startT('t1',120)">Iniciar</button><button class="tb" onclick="resetT('t1','2:00')">Reset</button></div></div></div>
-    <div class="ps"><div class="pn">Paso 2 · Adoración</div><div class="pt">Alaba a Dios</div><div class="px">Agradece quién es Él, su amor, su fidelidad, su poder.</div><div class="pq">"Grande es el Senor, y digno de suprema alabanza." - Salmo 145:3</div></div>
-    <div class="ps"><div class="pn">Paso 3 · Confesión</div><div class="pt">Habla con honestidad</div><div class="px">No hay nada que esconder ante quien ya te conoce por completo.</div><div class="pq">"Si confesamos nuestros pecados, El es fiel y justo para perdonarnos." - 1 Jn 1:9</div></div>
-    <div class="ps"><div class="pn">Paso 4 · Intercesión</div><div class="pt">Ora por otros</div><div class="px">Menciona en oración a tus seres queridos y a quienes te han pedido oración hoy.</div></div>
-    <div class="ps"><div class="pn">Paso 5 · Petición</div><div class="pt">Presenta tus necesidades</div><div class="px">Con fe y sin ansiedad, dile lo que necesitas. Luego suéltalo en Sus manos.</div><div class="pq">"Presentad vuestras peticiones delante de Dios." - Fil 4:6</div></div>
-    <div class="ps"><div class="pn">Paso 6 · Escucha</div><div class="pt">Quédate en silencio</div><div class="px">Dale espacio a Dios para hablar.</div><div class="tr"><div class="td" id="t2">5:00</div><div style="display:flex;gap:6px"><button class="tb go" onclick="startT('t2',300)">Iniciar</button><button class="tb" onclick="resetT('t2','5:00')">Reset</button></div></div></div>
+  <div class="sh">
+    <div class="br"><button class="bb" onclick="goHome()"><svg style="width:1em;height:1em;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5 M12 19l-7-7 7-7"/></svg></button><span class="bl">Inicio</span></div>
+    <div><div class="st">Oración diaria</div><div class="ss">Guía en 6 pasos</div></div>
   </div>
+  <div class="sb" id="or-body"></div>
 </div>
 
 <!-- BIBLIA -->
@@ -975,6 +999,7 @@ function openPg(id){
   if(id==='misv')renderMV('fav');
   if(id==='escucha')initEscucha();
   if(id==='plan')initPlan();
+  if(id==='oracion')initOracion();
 }
 function goHome(){
   document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
@@ -2210,6 +2235,229 @@ function fPost(){
 // TIMERS (ORACIÓN)
 // =============================================
 var timers={};
+// =============================================
+// ORACIÓN GUIADA MEJORADA
+// =============================================
+var OR_STEPS = [
+  {
+    id:'silencio', num:1, label:'Paso 1 · Silencio', title:'Prepara tu corazón',
+    desc:'Cierra los ojos. Respira profundo tres veces. Reconoce que Dios está contigo ahora mismo, en este momento.',
+    verse:'"Estad quietos y conoced que yo soy Dios." — Salmo 46:10',
+    timer:120, timerLabel:'2:00',
+    ai:false, ta:false
+  },
+  {
+    id:'adoracion', num:2, label:'Paso 2 · Adoración', title:'Alaba a Dios',
+    desc:'Antes de pedir nada, reconoce quién es Él. Su amor que no falla, su fidelidad que no cambia, su poder que no tiene límite.',
+    verse:'"Grande es el Señor, y digno de suprema alabanza." — Salmo 145:3',
+    ai:true, aiPrompt:'Genera una oración corta de adoración (3-4 frases) para comenzar el tiempo de oración del día. Cálida, sincera, en primera persona. Solo la oración, sin introducción.',
+    ta:true, taPlaceholder:'Escribe tu propia alabanza...'
+  },
+  {
+    id:'confesion', num:3, label:'Paso 3 · Confesión', title:'Habla con honestidad',
+    desc:'No hay nada que esconder ante quien ya te conoce completamente. La confesión no es castigo — es volver a casa.',
+    verse:'"Si confesamos nuestros pecados, él es fiel y justo para perdonarnos." — 1 Juan 1:9',
+    ai:true, aiPrompt:'Escribe una oración breve de confesión y arrepentimiento (3-4 frases). Honesta y humilde, que invite a la persona a abrir su corazón. En primera persona. Solo la oración.',
+    ta:true, taPlaceholder:'¿Hay algo que quieres confesar hoy?'
+  },
+  {
+    id:'intercesion', num:4, label:'Paso 4 · Intercesión', title:'Ora por otros',
+    desc:'Lleva delante de Dios a las personas que amas y a quienes lo necesitan. Tu oración por ellos tiene poder.',
+    verse:'"Orad sin cesar." — 1 Tesalonicenses 5:17',
+    ai:false,
+    ta:true, taPlaceholder:'¿Por quién quieres orar hoy? Escribe sus nombres o situaciones...'
+  },
+  {
+    id:'peticion', num:5, label:'Paso 5 · Petición', title:'Presenta tus necesidades',
+    desc:'Con fe y sin ansiedad, dile lo que necesitas. Dios no se cansa de escucharte. Luego suéltalo en sus manos.',
+    verse:'"No os afanéis por nada; sino sean conocidas vuestras peticiones delante de Dios." — Filipenses 4:6',
+    ai:true, aiPrompt:'Escribe una oración breve de petición y entrega (3-4 frases) que ayude a la persona a dejar sus cargas en manos de Dios con fe. En primera persona. Solo la oración.',
+    ta:true, taPlaceholder:'¿Qué necesitas pedirle a Dios hoy?'
+  },
+  {
+    id:'escucha', num:6, label:'Paso 6 · Escucha', title:'Quédate en silencio',
+    desc:'La oración no es solo hablar — también es escuchar. Dale espacio a Dios para responder. Quédate quieto unos minutos.',
+    verse:'"Habla, Señor, que tu siervo escucha." — 1 Samuel 3:9',
+    timer:300, timerLabel:'5:00',
+    ai:false,
+    ta:true, taPlaceholder:'¿Qué sientes que Dios te dice hoy?'
+  }
+];
+
+var orStep = 0;
+var orDone = [];
+
+function initOracion() {
+  orStep = 0; orDone = [];
+  var body = document.getElementById('or-body');
+  if(!body) return;
+  body.innerHTML = '';
+  renderOracion(body);
+}
+
+function renderOracion(body) {
+  body.innerHTML = '';
+
+  // Progress bar
+  var prog = document.createElement('div');
+  prog.className = 'or-progress';
+  OR_STEPS.forEach(function(s, i) {
+    var dot = document.createElement('div');
+    dot.className = 'or-prog-dot' + (i < orStep ? ' done' : '') + (i === orStep ? ' active' : '');
+    prog.appendChild(dot);
+  });
+  body.appendChild(prog);
+
+  // Steps
+  OR_STEPS.forEach(function(step, i) {
+    var isActive = i === orStep;
+    var isDone = orDone.indexOf(i) !== -1;
+
+    var card = document.createElement('div');
+    card.className = 'or-step' + (isActive ? ' active' : '') + (isDone ? ' done' : '');
+
+    // Header
+    var hdr = document.createElement('div');
+    hdr.className = 'or-step-hdr';
+    hdr.onclick = (function(idx){ return function(){ orStep = idx; renderOracion(body); }; })(i);
+    hdr.innerHTML = '<div class="or-step-num">' + (isDone ? '✓' : step.num) + '</div>'
+      + '<div class="or-step-info"><div class="or-step-label">'+step.label+'</div><div class="or-step-title">'+step.title+'</div></div>'
+      + '<svg style="width:16px;height:16px;color:var(--text3);transform:rotate('+(isActive?'90':'0')+'deg);transition:transform .2s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"/></svg>';
+    card.appendChild(hdr);
+
+    // Body (only if active)
+    if(isActive) {
+      var bd = document.createElement('div');
+      bd.className = 'or-step-body';
+
+      // Description
+      var desc = document.createElement('div');
+      desc.className = 'or-step-desc';
+      desc.textContent = step.desc;
+      bd.appendChild(desc);
+
+      // Verse
+      var verse = document.createElement('div');
+      verse.className = 'or-verse';
+      verse.textContent = step.verse;
+      bd.appendChild(verse);
+
+      // Timer
+      if(step.timer) {
+        var timerDiv = document.createElement('div');
+        timerDiv.className = 'tr';
+        timerDiv.innerHTML = '<div class="td" id="t-'+step.id+'">'+step.timerLabel+'</div><div style="display:flex;gap:6px"><button class="tb go" onclick="startT(this.dataset.id,'+step.timer+')" data-id="t-'+step.id+'">Iniciar</button><button class="tb" onclick="resetT(this.dataset.id,this.dataset.lbl)" data-id="t-'+step.id+'" data-lbl="'+step.timerLabel+'">Reset</button></div>';
+        bd.appendChild(timerDiv);
+      }
+
+      // AI generated prayer
+      if(step.ai) {
+        var aiBox = document.createElement('div');
+        var aiKey = 'or_ai_' + step.id + '_' + today;
+        var saved = ld(aiKey, null);
+        aiBox.className = 'or-ai-box';
+        if(saved) {
+          aiBox.textContent = saved;
+        } else {
+          aiBox.innerHTML = '<div class="dvc-loading"><span></span><span></span><span></span></div>';
+          (function(box, s, k){
+            ai([{role:'user', content: s.aiPrompt}], null, 200).then(function(txt){
+              box.textContent = txt;
+              sv(k, txt);
+            }).catch(function(){
+              box.textContent = 'Señor, me acerco a ti con el corazón abierto...';
+            });
+          })(aiBox, step, aiKey);
+        }
+        var aiLabel = document.createElement('div');
+        aiLabel.style.cssText = 'font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;';
+        aiLabel.textContent = 'Oración sugerida';
+        bd.appendChild(aiLabel);
+        bd.appendChild(aiBox);
+      }
+
+      // Textarea
+      if(step.ta) {
+        var taKey = 'or_ta_' + step.id + '_' + today;
+        var taLabel = document.createElement('div');
+        taLabel.style.cssText = 'font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;';
+        taLabel.textContent = 'Tu oración personal';
+        bd.appendChild(taLabel);
+        var ta = document.createElement('textarea');
+        ta.className = 'or-ta';
+        ta.placeholder = step.taPlaceholder;
+        ta.value = ld(taKey, '');
+        ta.oninput = (function(k){ return function(){ sv(k, this.value); }; })(taKey);
+        bd.appendChild(ta);
+      }
+
+      // Actions
+      var actions = document.createElement('div');
+      actions.className = 'or-actions';
+
+      if(i > 0) {
+        var prev = document.createElement('button');
+        prev.className = 'or-btn';
+        prev.innerHTML = '← Anterior';
+        prev.onclick = function(){ orStep = i-1; renderOracion(body); };
+        actions.appendChild(prev);
+      }
+
+      var next = document.createElement('button');
+      next.className = 'or-btn gold';
+      if(i === OR_STEPS.length - 1) {
+        next.innerHTML = '🙏 Completar oración';
+        next.onclick = function(){
+          if(orDone.indexOf(i)===-1) orDone.push(i);
+          completeOracion(body);
+        };
+      } else {
+        next.innerHTML = 'Siguiente →';
+        next.onclick = function(){
+          if(orDone.indexOf(i)===-1) orDone.push(i);
+          orStep = i+1;
+          renderOracion(body);
+          body.scrollTop = 0;
+        };
+      }
+      actions.appendChild(next);
+      bd.appendChild(actions);
+      card.appendChild(bd);
+    }
+
+    body.appendChild(card);
+  });
+}
+
+function completeOracion(body) {
+  if(!rtdone.has('pray')) doneReto('pray','Completa la oración guiada',30,'oracion');
+  body.innerHTML = '';
+
+  // Progress (all done)
+  var prog = document.createElement('div');
+  prog.className = 'or-progress';
+  OR_STEPS.forEach(function(){
+    var dot = document.createElement('div');
+    dot.className = 'or-prog-dot done';
+    prog.appendChild(dot);
+  });
+  body.appendChild(prog);
+
+  var complete = document.createElement('div');
+  complete.className = 'or-complete';
+  complete.innerHTML = '<div style="font-size:36px">🙏</div>'
+    + '<div class="or-complete-title">Oración completada</div>'
+    + '<div class="or-complete-sub">Has hablado con Dios. Él te ha escuchado.<br>Lleva esta paz contigo el resto del día.</div>'
+    + '<div class="or-verse" style="width:100%;box-sizing:border-box">"La oración del justo es poderosa y eficaz." — Santiago 5:16</div>'
+    + '<button class="or-btn gold" style="width:100%" onclick="initOracion()">Orar de nuevo</button>'
+    + '<button class="or-btn" style="width:100%" onclick="goHome()">Volver al inicio</button>';
+  body.appendChild(complete);
+  body.scrollTop = 0;
+}
+
+window.initOracion = initOracion;
+window.completeOracion = completeOracion;
+
 function startT(id,secs){
   if(timers[id])return;
   var el=document.getElementById(id);if(!el)return;
