@@ -1741,31 +1741,32 @@ async function loadCh(bname,ch,btn){
     btn.classList.add('on');
     btn.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
   }
-  var BKNUM={Genesis:1,Exodo:2,Levitico:3,Numeros:4,Deuteronomio:5,Josue:6,Jueces:7,Rut:8,'1 Samuel':9,'2 Samuel':10,'1 Reyes':11,'2 Reyes':12,Job:18,Salmos:19,Proverbios:20,Eclesiastes:21,Isaias:23,Jeremias:24,Ezequiel:26,Daniel:27,Jonas:32,Malaquias:39,Mateo:40,Marcos:41,Lucas:42,Juan:43,Hechos:44,Romanos:45,'1 Corintios':46,'2 Corintios':47,Galatas:48,Efesios:49,Filipenses:50,Colosenses:51,'1 Tesalonicenses':52,Hebreos:58,Santiago:59,'1 Pedro':60,'1 Juan':62,Apocalipsis:66};
-  var bnum=BKNUM[bname];
-  if(!bnum){vout.innerHTML='<div style="padding:20px;color:var(--text3)">Libro no disponible</div>';return;}
-  function renderV(verses,numKey,textKey){
+  // Book index map (0-based, matching thiagobodruk/bible es_rvr.json)
+  var BKIDX={Genesis:0,Exodo:1,Levitico:2,Numeros:3,Deuteronomio:4,Josue:5,Jueces:6,Rut:7,'1 Samuel':8,'2 Samuel':9,'1 Reyes':10,'2 Reyes':11,Job:17,Salmos:18,Proverbios:19,Eclesiastes:20,Isaias:22,Jeremias:23,Ezequiel:25,Daniel:26,Jonas:31,Malaquias:38,Mateo:39,Marcos:40,Lucas:41,Juan:42,Hechos:43,Romanos:44,'1 Corintios':45,'2 Corintios':46,Galatas:47,Efesios:48,Filipenses:49,Colosenses:50,'1 Tesalonicenses':51,Hebreos:57,Santiago:58,'1 Pedro':59,'1 Juan':61,Apocalipsis:65};
+  var bIdx=BKIDX[bname];
+  if(bIdx===undefined){vout.innerHTML='<div style="padding:20px;color:var(--text3)">Libro no disponible</div>';return;}
+  try{
+    if(!window._bible){
+      var r=await fetch('https://raw.githubusercontent.com/thiagobodruk/bible/master/json/es_rvr.json');
+      if(!r.ok)throw new Error('http '+r.status);
+      var txt=await r.text();
+      window._bible=JSON.parse(txt.replace(/^\uFEFF/,''));
+    }
+    var chArr=window._bible[bIdx].chapters[ch-1];
+    if(!chArr||!chArr.length)throw new Error('empty');
     var saved=vdata[bname+'.'+ch]||{};
-    vout.innerHTML=verses.map(function(v){
-      var vn=v[numKey];var vt=(v[textKey]||'').replace(/"/g,'&quot;');
+    vout.innerHTML=chArr.map(function(vt,i){
+      var vn=i+1;
       var hl=(saved[vn]||{}).hl||'';
       var st=hl&&HL_COLORS[hl]?'background:'+HL_COLORS[hl]+';border-radius:3px;':'';
-      return '<span class="vv" id="v'+vn+'" style="'+st+'" data-t="'+vt+'" onclick="openVP(decodeURIComponent(this.dataset.b),'+ch+','+vn+',this.dataset.t)" data-b="'+encodeURIComponent(bname)+'"><sup class="vn">'+vn+'</sup> '+v[textKey]+' </span>';
+      var safeT=vt.replace(/"/g,'&quot;');
+      var safeB=encodeURIComponent(bname);
+      return '<span class="vv" id="v'+vn+'" style="'+st+'" data-t="'+safeT+'" data-b="'+safeB+'" onclick="openVP(decodeURIComponent(this.dataset.b),'+ch+','+vn+',this.dataset.t)"><sup class="vn">'+vn+'</sup> '+vt+' </span>';
     }).join('');
     var rdb=document.querySelector('.rdb');if(rdb)rdb.scrollTop=0;
     if(!rtdone.has('biblia'))doneReto('biblia','Lee un capitulo',25,'biblia');
-  }
-  try{
-    var url='https://api.getbible.net/v2/reinavalera1960/'+bnum+'/'+ch+'.json';
-    var r=await fetch(url);
-    if(!r.ok)throw new Error('http '+r.status);
-    var data=await r.json();
-    var verses=data.verses?Object.values(data.verses):[];
-    if(!verses.length)throw new Error('empty');
-    renderV(verses,'verse','text');
   }catch(e){
-    var bn2=bname.replace(/'/g,"\\'");
-    vout.innerHTML='<div style="padding:20px;color:var(--text3);font-size:13px;line-height:1.8">No se pudo cargar el capítulo.<br><br><button onclick="loadCh(\''+bn2+'\','+ch+',null)" style="background:var(--gd);border:0.5px solid var(--gold);color:var(--gold);padding:8px 18px;border-radius:20px;font-size:12px;cursor:pointer">Reintentar</button></div>';
+    vout.innerHTML='<div style="padding:20px;color:var(--text3);font-size:13px;line-height:1.8">No se pudo cargar el capítulo.<br><br><button onclick="loadCh(curBook,curChap,null)" style="background:var(--gd);border:0.5px solid var(--gold);color:var(--gold);padding:8px 18px;border-radius:20px;font-size:12px;cursor:pointer">Reintentar</button></div>';
   }
 }
 
