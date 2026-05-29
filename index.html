@@ -1411,137 +1411,127 @@ function togglePlanDay(month, dayNum, plan, numEl, weekEl, doneDays, totalDays) 
 if(uname||ld('email',null)){document.getElementById('splash').style.display='none';launch();}
 
 // =============================================
-// 22. ONBOARDING - PREGUNTAS FIJAS
+// 22. ONBOARDING - FIJO Y SIMPLE
 // =============================================
-var obStep = 0;
-var obData = {};
-var OB_STEPS = [
-  {
-    msg: '¡Hola! Bienvenido a Ágape. Soy tu espacio para crecer espiritualmente. Antes de empezar, ¿cómo te llamas?',
-    type: 'input',
-    placeholder: 'Escribe tu nombre...',
-    key: 'name'
-  },
-  {
-    msg: '¡Qué bonito nombre! ¿Cómo te sientes espiritualmente en este momento?',
-    type: 'options',
-    key: 'estado',
-    opts: ['Con paz', 'Un poco perdido', 'Buscando más', 'En un momento difícil']
-  },
-  {
-    msg: '¿Qué es lo que más necesitas ahora mismo?',
-    type: 'options',
-    key: 'necesidad',
-    opts: ['Paz interior', 'Fortalecer mi fe', 'Entender la Biblia', 'Apoyo en algo difícil']
-  },
-  {
-    msg: '¿Con qué tradición cristiana te identificas?',
-    type: 'options',
-    key: 'tradicion',
-    opts: ['Católico', 'Evangélico', 'No denominacional', 'Prefiero no decir']
-  },
-  {
-    msg: '¿Con qué frecuencia te gustaría usar Ágape?',
-    type: 'options',
-    key: 'frecuencia',
-    opts: ['Cada día', 'Varios días a la semana', 'Cuando lo necesite']
-  }
-];
+var obH = [];
 
 function startOb(){
-  obH=[];obStep=0;obData={};
+  obH = [];
   if(uname){document.getElementById('splash').style.display='none';launch();return;}
-  var sp=document.getElementById('splash');sp.classList.add('out');
+  var sp=document.getElementById('splash');
+  sp.classList.add('out');
   setTimeout(function(){
     sp.style.display='none';
-    var ob=document.getElementById('ob');if(ob)ob.classList.add('on');
-    showObStep(0);
-  },600);
-}
-
-function showObStep(step){
-  if(step >= OB_STEPS.length){finOb();return;}
-  var s = OB_STEPS[step];
-  var prog = Math.round((step/OB_STEPS.length)*100);
-  var obpel = document.getElementById('obp');if(obpel)obpel.style.width=prog+'%';
-  
-  // Update input placeholder
-  var inp = document.getElementById('obin');
-  if(inp) inp.placeholder = s.type==='input' ? s.placeholder : 'Escribe aquí...';
-  if(inp) inp.style.display = s.type==='input' ? '' : 'none';
-  var snd = document.querySelector('.ob-sn');
-  if(snd) snd.style.display = s.type==='input' ? '' : 'none';
-
-  // Add AI message
-  setTimeout(function(){
-    addObMsg(s.msg, false);
-    if(s.type === 'options'){
-      addObOptions(s.opts);
-    }
-  }, 300);
+    var ob=document.getElementById('ob');
+    if(ob) ob.classList.add('on');
+    // Show first message after a short delay
+    setTimeout(function(){
+      addObMsg('Hola. Bienvenido a Ágape, tu espacio de crecimiento espiritual. ¿Cómo te llamas?', false);
+    }, 400);
+  }, 600);
 }
 
 function addObMsg(text, isU){
-  var ms=document.getElementById('obms');if(!ms)return;
-  var d=document.createElement('div');d.className='om '+(isU?'u':'a');
-  if(!isU)d.innerHTML='<div class="os">Ágape</div>';
-  var b=document.createElement('div');b.className='ob';
-  b.style.whiteSpace='pre-line';
+  var ms=document.getElementById('obms');
+  if(!ms) return;
+  var d=document.createElement('div');
+  d.className='om '+(isU?'u':'a');
+  if(!isU) d.innerHTML='<div class="os">Ágape</div>';
+  var b=document.createElement('div');
+  b.className='ob';
   b.textContent=text;
   d.appendChild(b);
-  ms.appendChild(d);ms.scrollTop=ms.scrollHeight;
+  ms.appendChild(d);
+  ms.scrollTop=ms.scrollHeight;
 }
 
 function addObOptions(opts){
-  var ms=document.getElementById('obms');if(!ms)return;
-  var d=document.createElement('div');d.className='om a';
-  var r=document.createElement('div');r.className='oo';
+  var ms=document.getElementById('obms');
+  if(!ms) return;
+  var d=document.createElement('div');
+  d.className='om a';
+  var r=document.createElement('div');
+  r.className='oo';
   opts.forEach(function(o){
-    var btn=document.createElement('button');btn.className='oob';btn.textContent=o;
+    var btn=document.createElement('button');
+    btn.className='oob';
+    btn.textContent=o;
     btn.onclick=function(){
       document.querySelectorAll('.oob').forEach(function(b){b.style.pointerEvents='none';b.style.opacity='.4';});
       addObMsg(o,true);
-      obData[OB_STEPS[obStep].key]=o;
-      obStep++;
-      setTimeout(function(){showObStep(obStep);},400);
+      obH.push({role:'user',content:o});
+      setTimeout(function(){obResp();},400);
     };
     r.appendChild(btn);
   });
   d.appendChild(r);
-  ms.appendChild(d);ms.scrollTop=ms.scrollHeight;
+  ms.appendChild(d);
+  ms.scrollTop=ms.scrollHeight;
 }
 
 function obSend(){
-  var inp=document.getElementById('obin');if(!inp)return;
-  var t=inp.value.trim();if(!t)return;
+  var inp=document.getElementById('obin');
+  if(!inp) return;
+  var t=inp.value.trim();
+  if(!t) return;
   inp.value='';
-  var s=OB_STEPS[obStep];
   addObMsg(t,true);
-  obData[s.key]=t;
-  if(s.key==='name'){
-    uname=t;uinit=t.slice(0,2).toUpperCase();sv('name',uname);sv('init',uinit);
-    // Update next message to use name
-    OB_STEPS[1].msg='¡Qué bonito nombre, '+t+'! ¿Cómo te sientes espiritualmente en este momento?';
+  obH.push({role:'user',content:t});
+  setTimeout(function(){obResp();},400);
+}
+
+function obResp(){
+  var step=obH.length;
+  var obpel=document.getElementById('obp');
+  if(obpel) obpel.style.width=Math.round((step/5)*100)+'%';
+
+  if(step===1){
+    var name=obH[0].content;
+    uname=name;uinit=name.slice(0,2).toUpperCase();
+    sv('name',uname);sv('init',uinit);
+    addObMsg('¡Hola, '+name+'! ¿Cómo te sientes espiritualmente en este momento?',false);
+    setTimeout(function(){
+      addObOptions(['Con paz','Un poco perdido','Buscando más','En un momento difícil']);
+    },300);
+  } else if(step===2){
+    addObMsg('¿Qué es lo que más necesitas ahora mismo?',false);
+    setTimeout(function(){
+      addObOptions(['Paz interior','Fortalecer mi fe','Entender la Biblia','Apoyo en algo difícil']);
+    },300);
+  } else if(step===3){
+    addObMsg('¿Con qué tradición cristiana te identificas?',false);
+    setTimeout(function(){
+      addObOptions(['Católico','Evangélico','No denominacional','Prefiero no decir']);
+    },300);
+  } else if(step===4){
+    addObMsg('¿Con qué frecuencia te gustaría usar Ágape?',false);
+    setTimeout(function(){
+      addObOptions(['Cada día','Varios días a la semana','Cuando lo necesite']);
+    },300);
+  } else {
+    var estado=obH[1]?obH[1].content:'';
+    var msgs={
+      'Con paz':'Qué regalo llegar desde un lugar de paz. Ágape está aquí para ayudarte a seguir creciendo.',
+      'Un poco perdido':'No estás solo en ese caminar. Aquí encontrarás dirección, paso a paso.',
+      'Buscando más':'Esa búsqueda ya es una oración. Aquí encontrarás herramientas para profundizar cada día.',
+      'En un momento difícil':'Dios te encuentra exactamente donde estás. Ágape está aquí para acompañarte.'
+    };
+    var msg=msgs[estado]||'Cada día es una nueva oportunidad para crecer. Ágape está aquí para acompañarte.';
+    addObMsg('¡Todo listo, '+uname+'! '+msg,false);
+    setTimeout(finOb,2500);
   }
-  obStep++;
-  setTimeout(function(){showObStep(obStep);},400);
 }
 
 function finOb(){
   var obpel=document.getElementById('obp');if(obpel)obpel.style.width='100%';
-  // Generate farewell message
-  var msg='¡Todo listo, '+(uname||'')+'! Ágape está aquí para acompañarte cada día en tu camino de fe. 🌿';
   setTimeout(function(){
-    addObMsg(msg,false);
-    setTimeout(function(){
-      var ob=document.getElementById('ob');if(ob)ob.classList.remove('on');
-      if(!ld('email',null)){var em=document.getElementById('em');if(em)em.classList.add('on');}
-      else{launch();}
-    },2000);
+    var ob=document.getElementById('ob');if(ob)ob.classList.remove('on');
+    if(!ld('email',null)){var em=document.getElementById('em');if(em)em.classList.add('on');}
+    else{launch();}
   },400);
 }
 
-function exName(){} // kept for compatibility
+function exName(){}
 
 // =============================================
 // 23. EMAIL
